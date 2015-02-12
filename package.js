@@ -12,7 +12,19 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.0.3.1');
-  api.addFiles('softbricks:user-management.js');
+
+  api.use(['templating'], 'client');
+  api.use(['accounts-password']);
+
+  // server
+  api.addFiles('server/publications.js', 'server');
+  api.addFiles('server/methods.js', 'server');
+
+  // client
+  api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
+  api.addFiles('lib/userList.js','client');
+
+  api.export('UserManagementTemplates');
 });
 
 Package.onTest(function(api) {
