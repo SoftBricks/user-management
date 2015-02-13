@@ -1,0 +1,14 @@
+<template name="createUser">
+    {{#autoForm schema=userschema id="createUser" type="method" meteormethod="createUserWithoutPassword"}}
+        <fieldset>
+            <legend>Create User</legend>
+            {{> afQuickField name="fullname"}}
+            {{> afQuickField name="email"}}
+            {{> afQuickField name="username"}}
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+            </div>
+        </fieldset>
+    {{/autoForm}}
+</template>
