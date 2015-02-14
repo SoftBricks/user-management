@@ -14,17 +14,18 @@ Package.onUse(function(api) {
   api.versionsFrom('1.0.3.1');
 
   api.use(['templating'], 'client');
-  api.use(['accounts-password']);
+  api.use(['accounts-password', 'underscore', 'check'], ['client', 'server']);
 
   // server
   api.addFiles('server/publications.js', 'server');
   api.addFiles('server/methods.js', 'server');
 
   // client
+  api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
-  api.addFiles('lib/userList.js','client');
+  api.addFiles('lib/umShowUsers.js','client');
 
-  api.export('UserManagementTemplates');
+  api.export('UserManagementTemplates', ['client', 'server']);
 });
 
 Package.onTest(function(api) {
