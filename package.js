@@ -15,15 +15,22 @@ Package.onUse(function(api) {
 
   api.use(['templating'], 'client');
   api.use(['accounts-password', 'underscore', 'check'], ['client', 'server']);
+  api.use(['useraccounts:core']);
+  api.use(['aldeed:autoform@4.2.2']);
+  api.imply('aldeed:autoform');
+  api.use(['aldeed:simple-schema@1.3.0']);
+  api.imply('aldeed:simple-schema');
 
   // server
   api.addFiles('server/publications.js', 'server');
   api.addFiles('server/methods.js', 'server');
+  api.addFiles('server/init.js', 'server');
 
   // client
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
   api.addFiles('lib/umShowUsers.js','client');
+  api.addFiles(['lib/templates/createUser.html','lib/templates/createUser.js','lib/templates/schema.js','lib/router.js'], 'client');
 
   api.export('UserManagementTemplates', ['client', 'server']);
 });
