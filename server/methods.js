@@ -1,22 +1,4 @@
 if (Meteor.isServer) {
-    Schema = {};
-    Schema.user = new SimpleSchema({
-        fullname: {
-            type: String,
-            label: "Fullname",
-            max: 80
-        },
-        email: {
-            type: String,
-            regEx: SimpleSchema.RegEx.Email,
-            label: "E-mail address"
-        },
-        username: {
-            type: String,
-            label: "Username",
-            max: 30
-        }
-    });
 
     var generatePassword = function () {
         var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
@@ -27,7 +9,7 @@ if (Meteor.isServer) {
 
         for (var i = 0; i < string_length; i++) {
             // If random bit is 0, there are less than 3 digits already saved, and there are not already 5 characters saved, generate a numeric value.
-            if ((Math.floor(Math.random() * 2) == 0) && numCount < 3 || charCount >= 5) {
+            if ((Math.floor(Math.random() * 2) === 0) && numCount < 3 || charCount >= 5) {
                 var rnum = Math.floor(Math.random() * 10);
                 randomstring += rnum;
                 numCount += 1;
@@ -43,7 +25,7 @@ if (Meteor.isServer) {
 
     var checkUserRight = function (userId, currentUserId) {
 
-        if (currentUserId == userId)
+        if (currentUserId === userId)
             return true;
 
         var admin = Meteor.users.findOne({_id: currentUserId}, {
@@ -54,7 +36,7 @@ if (Meteor.isServer) {
             username: 0
         });
         if (admin) {
-            if (admin.profile.superAdmin || admin.profile.admin)
+            if (admin.profile && (admin.profile.superAdmin || admin.profile.admin))
                 return true;
         }
 
@@ -111,9 +93,9 @@ if (Meteor.isServer) {
                 if (!group)
                     throw new Meteor.error("group", "Create group failed!");
             } else {
-                if (name == "")
+                if (name === "")
                     throw new Meteor.error("group", "Name was not specified!");
-                if (projectId == "")
+                if (projectId === "")
                     throw new Meteor.Error("group", "Project id was not specified");
             }
 
@@ -128,9 +110,9 @@ if (Meteor.isServer) {
                     }
                 });
             } else {
-                if (parentGroupId == "")
+                if (parentGroupId === "")
                     throw new Meteor.error("group", "Parent group id was not specified!");
-                if (groupId == "")
+                if (groupId === "")
                     throw new Meteor.Error("group", "Group id was not specified");
             }
         },
@@ -153,9 +135,9 @@ if (Meteor.isServer) {
                     $addToSet: {sharedWithGroups: groupId}
                 });
             } else {
-                if (assetId == "")
+                if (assetId === "")
                     throw new Meteor.error("asset", "Asset id was not specified!");
-                if (groupId == "")
+                if (groupId === "")
                     throw new Meteor.Error("asset", "Group id was not specified");
             }
         },
@@ -170,13 +152,14 @@ if (Meteor.isServer) {
                     }
                 });
             } else {
-                if (folderId == "")
+                if (folderId === "")
                     throw new Meteor.error("folder", "Folder id was not specified!");
-                if (groupId == "")
+                if (groupId === "")
                     throw new Meteor.Error("folder", "Group id was not specified");
             }
         },
         createUserWithoutPassword: function (doc) {
+            console.log(doc);
             // Important server-side check for security and data integrity
             if (checkUserRight("",Meteor.userId())) {
                 check(doc, Schema.user);
@@ -189,10 +172,10 @@ if (Meteor.isServer) {
                     profile: {
                         fullname: doc.fullname,
                         superAdmin: false,
-                        admin: false
+                        admin: doc.admin
                     }
                 };
-                var user = Accounts.createUser(user);
+                user = Accounts.createUser(user);
                 if (user)
                     Accounts.sendEnrollmentEmail(user);
                 if (!user)
@@ -209,7 +192,7 @@ if (Meteor.isServer) {
                         services: 0,
                         username: 0
                     });
-                    if (userToRemove && userToRemove.profile.superAdmin == false) {
+                    if (userToRemove && userToRemove.profile.superAdmin === false) {
 
                         Meteor.users.remove({
                             _id: userId
