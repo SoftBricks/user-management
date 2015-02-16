@@ -1,10 +1,10 @@
 <template name="createUser">
-    {{#autoForm schema=userschema id="createUser" type="method" meteormethod="createUserWithoutPassword"}}
+    {{#autoForm schema=userschema id="createUser" type="method" meteormethod="createUserWithoutPassword" validation="keyup"}}
         <fieldset>
             <legend>Create User</legend>
-            {{> afQuickField name="fullname"}}
-            {{> afQuickField name="email"}}
-            {{> afQuickField name="username"}}
+            {{> afQuickField name="profile.$.fullname" autocomplete="off"}}
+            {{> afQuickField name="email" autocomplete="off"}}
+            {{> afQuickField name="username" autocomplete="off"}}
             <div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="reset" class="btn btn-default">Reset</button>
