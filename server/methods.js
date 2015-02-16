@@ -159,20 +159,19 @@ if (Meteor.isServer) {
             }
         },
         createUserWithoutPassword: function (doc) {
-            console.log(doc);
             // Important server-side check for security and data integrity
             if (checkUserRight("",Meteor.userId())) {
-                check(doc, Schema.user);
+                // check(doc, Schema.user);
 
                 var password = generatePassword();
                 var user = {
                     email: doc.email,
                     password: password,
                     username: doc.username,
+                    superAdmin: false,
+                    admin: doc.admin,
                     profile: {
-                        fullname: doc.fullname,
-                        superAdmin: false,
-                        admin: doc.admin
+                        fullname: doc.fullname
                     }
                 };
                 user = Accounts.createUser(user);
@@ -268,6 +267,20 @@ if (Meteor.isServer) {
                     }
                 );
             }
+        },
+        /*
+         * checks if a given username is already existing in the database
+         * @param String username
+         * @return Boolean
+         *      true = username is existing
+         *      false = username not existing
+         */
+        checkUsernameExisting: function(username) {
+            var existingUsers = Meteor.users.find({username: username}).fetch();
+            if(existingUsers.length > 0) {
+                return true;
+            }
+            return false;
         }
     });
 }

@@ -20,6 +20,8 @@ Package.onUse(function(api) {
   api.imply('aldeed:autoform');
   api.use(['aldeed:simple-schema@1.3.0']);
   api.imply('aldeed:simple-schema');
+  api.use(['aldeed:collection2@2.3.2']);
+  api.imply('aldeed:collection2');
 
   // server
   api.addFiles('server/publications.js', 'server');
