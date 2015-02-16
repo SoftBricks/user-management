@@ -1,5 +1,5 @@
 <template name="createUser">
-    {{#autoForm schema=userschema id="createUser" type="method" meteormethod="createUserWithoutPassword" validation="keyup"}}
+    {{#autoForm schema=userschema id="createUserForm" type="method" meteormethod="createUserWithoutPassword" validation="keyup"}}
         <fieldset>
             <legend>Create User</legend>
             {{> afQuickField name="profile.$.fullname" autocomplete="off"}}
