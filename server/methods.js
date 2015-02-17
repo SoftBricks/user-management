@@ -158,20 +158,19 @@ if (Meteor.isServer) {
                     throw new Meteor.Error("folder", "Group id was not specified");
             }
         },
-        createUserWithoutPassword: function (doc) {
+        createUserWithoutPassword: function (doc){
             // Important server-side check for security and data integrity
-            if (checkUserRight("",Meteor.userId())) {
-                // check(doc, Schema.user);
-
-                var password = generatePassword();
+            if (true) { //checkUserRight("",Meteor.userId())
+                //check(doc, Schema.user);
+                //var password = generatePassword();
                 var user = {
-                    email: doc.email,
-                    password: password,
+                    email: doc.emails[0].address,
+                    //password: password,
                     username: doc.username,
                     superAdmin: false,
                     admin: doc.admin,
                     profile: {
-                        fullname: doc.fullname
+                        fullname: doc.profile.fullname
                     }
                 };
                 user = Accounts.createUser(user);
@@ -179,6 +178,8 @@ if (Meteor.isServer) {
                     Accounts.sendEnrollmentEmail(user);
                 if (!user)
                     throw new Meteor.Error("user", "User has not been created");
+            }else{
+                throw new Meteor.Error("user", "You have no rights to create a new User");
             }
         },
         removeUser: function (userId) {
@@ -224,7 +225,7 @@ if (Meteor.isServer) {
             }
         },
         updateUserInformation: function (doc) {
-                check(doc, Schema.user);
+                //check(doc, Schema.user);
             if (checkUserRight(doc.userId, Meteor.userId(), "admin")) {
                 var email, username, fullname;
 
@@ -277,9 +278,35 @@ if (Meteor.isServer) {
          */
         checkUsernameExisting: function(username) {
             var existingUsers = Meteor.users.find({username: username}).fetch();
-            if(existingUsers.length > 0) {
+            if(existingUsers.length > 0)
                 return true;
-            }
+
+            return false;
+        },
+        /*
+         * checks if a given email is already existing in the database
+         * @param String email
+         * @return Boolean
+         *      true = email is existing
+         *      false = email not existing
+         */
+        checkEmailExisting: function(email) {
+            var emailArray = [
+                {
+                    address: email,
+                    verified: true
+                },
+                {
+                    address:email,
+                    verified: false
+                }
+            ];
+
+            var existingEmails = Meteor.users.find({emails: {$in: emailArray}}).fetch();
+
+            if(existingEmails.length > 0)
+                return true;
+
             return false;
         }
     });
