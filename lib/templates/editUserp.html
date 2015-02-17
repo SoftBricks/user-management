@@ -1,0 +1,18 @@
+<template name="editUserp">
+    {{#with user}}
+        {{#autoForm schema=userschema doc=this id="createUserForm" type="method" meteormethod="updateUserInformation" validation="keyup"}}
+            <fieldset>
+                <legend>Edit User</legend>
+                {{> afQuickField name="profile.fullname" autocomplete="off"}}
+                {{> afQuickField name="emails.0.address" autocomplete="off"}}
+                {{> afQuickField name="username" autocomplete="off"}}
+                {{> afQuickField name="admin"}}
+                <div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="/showUserp/{{_id}}">Cancel</a>
+                </div>
+            </fieldset>
+        {{/autoForm}}
+
+    {{/with}}
+</template>

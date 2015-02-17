@@ -160,6 +160,7 @@ if (Meteor.isServer) {
         },
         createUserWithoutPassword: function (doc){
             // Important server-side check for security and data integrity
+            //TODO checkUserRight
             if (true) { //checkUserRight("",Meteor.userId())
                 //check(doc, Schema.user);
                 //var password = generatePassword();
@@ -226,16 +227,17 @@ if (Meteor.isServer) {
         },
         updateUserInformation: function (doc) {
                 //check(doc, Schema.user);
-            if (checkUserRight(doc.userId, Meteor.userId(), "admin")) {
-                var email, username, fullname;
+            //TODO checkUserRight
+            if (true) {//checkUserRight(doc.userId, Meteor.userId(), "admin")
 
                 var user = Meteor.users.update({
                         _id: doc.userId
                     }, {
                         $set: {
-                            'emails.0.address': doc.email,
+                            'emails.0.address': doc.emails[0].address,
                             username: doc.username,
-                            'profile.fullname': doc.fullname
+                            'profile.fullname': doc.profile.fullname,
+                            admin: doc.admin
                         }
                     }
                 );
@@ -243,6 +245,8 @@ if (Meteor.isServer) {
                     throw new Meteor.Error("user", "updating the user failed");
 
                 return true;
+            }else{
+                throw new Meteor.Error("user", "You have no rights to edit a user");
             }
         },
         promoteUserToAdmin: function (userId) {

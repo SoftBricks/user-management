@@ -1,0 +1,17 @@
+<template name="showUserp">
+    {{#with user}}
+        <label for="Fullname">Fullname</label>
+        <input id="email" disabled value="{{profile.fullname}}"/>
+
+        <label for="username">Username</label>
+        <input id="username" disabled value="{{username}}"/>
+
+        {{#each emails}}
+            <label for="email">Email</label>
+            <input id="email" disabled value="{{address}}"/>
+        {{/each}}
+        <!-- </div> -->
+        <a href="/editUserp/{{_id}}">Edit</a>
+        <a href="/showUsersp">Back</a>
+    {{/with}}
+</template>
