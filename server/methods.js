@@ -234,15 +234,25 @@ if (Meteor.isServer) {
             if (true) { //checkUserRight("",Meteor.userId())
                 //check(doc, Schema.user);
                 //var password = generatePassword();
+                var fields;
+                //_.each(doc.profile.fields, function(element){
+                //    fields.push({
+                //        element
+                //    });
+                //});
+
+                var profile = {
+                    superAdmin: false,
+                    admin: doc.profile.admin,
+                    fullname: doc.profile.fullname,
+                    fields: doc.profile.fields
+                };
+
                 var user = {
                     email: doc.emails[0].address,
                     //password: password,
                     username: doc.username,
-                    superAdmin: false,
-                    admin: doc.admin,
-                    profile: {
-                        fullname: doc.profile.fullname
-                    }
+                    profile: profile
                 };
                 user = Accounts.createUser(user);
                 if (user)
@@ -270,7 +280,7 @@ if (Meteor.isServer) {
                         services: 0,
                         username: 0
                     });
-                    if (userToRemove && userToRemove.profile.superAdmin === false) {
+                    if (userToRemove && userToRemove.superAdmin === false) {
 
                         Meteor.users.remove({
                             _id: userId
@@ -322,8 +332,8 @@ if (Meteor.isServer) {
                         $set: {
                             'emails.0.address': doc.emails[0].address,
                             username: doc.username,
-                            'profile.fullname': doc.profile.fullname,
-                            admin: doc.admin
+                            'profile.fullname': doc.fullname,
+                            'profile.admin': doc.admin
                         }
                     }
                 );
