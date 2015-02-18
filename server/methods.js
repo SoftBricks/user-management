@@ -1,5 +1,9 @@
 if (Meteor.isServer) {
-
+    /*
+     * Generates a random password
+     * @return String
+     *      password with length 10
+     */
     var generatePassword = function () {
         var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
         var string_length = 10;
@@ -8,13 +12,11 @@ if (Meteor.isServer) {
         var numCount = 0;
 
         for (var i = 0; i < string_length; i++) {
-            // If random bit is 0, there are less than 3 digits already saved, and there are not already 5 characters saved, generate a numeric value.
             if ((Math.floor(Math.random() * 2) === 0) && numCount < 3 || charCount >= 5) {
                 var rnum = Math.floor(Math.random() * 10);
                 randomstring += rnum;
                 numCount += 1;
             } else {
-                // If any of the above criteria fail, go ahead and generate an alpha character from the chars string
                 var rnum = Math.floor(Math.random() * chars.length);
                 randomstring += chars.substring(rnum, rnum + 1);
                 charCount += 1;
@@ -22,7 +24,15 @@ if (Meteor.isServer) {
         }
         return randomstring;
     };
-
+    /*
+     * checks the user rights to be allowed to to do special stuff
+     * e.g. removing users, promote them to admins...
+     * @param String userId
+     * @param String currentUserId
+     * @return Boolean
+     *      true = user is allowed to do the action
+     *      error = user is not allowed to do the action
+     */
     var checkUserRight = function (userId, currentUserId) {
 
         if (currentUserId === userId)
@@ -44,6 +54,15 @@ if (Meteor.isServer) {
 
     };
     Meteor.methods({
+        /*
+         * assigns a user to a group
+         * @param String groupId
+         * @param String userId
+         * @param String email
+         * @return Boolean
+         *      true = assigned user to group successfull
+         *      error = assigning user to group failed
+         */
         assignUserToGroup: function (groupId, userId, email) {
             if (groupId) {
                 //TODO Check if team exists
@@ -63,6 +82,15 @@ if (Meteor.isServer) {
             }
             return true;
         },
+        /*
+         * removes a user from a group
+         * @param String groupId
+         * @param String userId
+         * @param String email
+         * @return Boolean
+         *      true = removed user from group successfull
+         *      error = removing user from group failed
+         */
         removeUserFromGroup: function (groupId, userId, email) {
             if (groupId) {
                 var update = {$pull: {groups: groupId}}
@@ -81,7 +109,15 @@ if (Meteor.isServer) {
             }
             return true;
         },
-
+        /*
+         * creates a group
+         * @param String name
+         * @param String projectId
+         * @param String parentGroup
+         * @return Boolean
+         *      true = created group successfull
+         *      error = creating group failed
+         */
         createGroup: function (name, projectId, parentGroup) {
             //TODO check if project exists
             if (name && projectId) {
@@ -101,7 +137,14 @@ if (Meteor.isServer) {
 
             return true;
         },
-
+        /*
+         * assigns a sub group to a group
+         * @param String groupId
+         * @param String parentGroupId
+         * @return Boolean
+         *      true = assign subgroup successfull
+         *      error = assign subgroup failed
+         */
         assignSubGroup: function (groupId, parentGroupId) {
             if (groupId && parentGroupId) {
                 Groups.update({_id: grouId}, {
@@ -116,7 +159,13 @@ if (Meteor.isServer) {
                     throw new Meteor.Error("group", "Group id was not specified");
             }
         },
-
+        /*
+         * removes a group
+         * @param String groupId
+         * @return Boolean
+         *      true = removed group successfull
+         *      error = removing group failed
+         */
         removeGroup: function (groupId) {
             if (groupId) {
                 Groups.remove({_id: groupId});
@@ -126,7 +175,14 @@ if (Meteor.isServer) {
                 });
             }
         },
-
+        /*
+         * shares a asset with a group
+         * @param String assetId
+         * @param String groupId
+         * @return Boolean
+         *      true = share asset with group successfull
+         *      error = share asset with group failed
+         */
         shareAssetWithGroup: function (assetId, groupId) {
             if (assetId && groupId) {
                 AssetFiles.update({
@@ -141,7 +197,14 @@ if (Meteor.isServer) {
                     throw new Meteor.Error("asset", "Group id was not specified");
             }
         },
-
+        /*
+         * shares a folder with a group
+         * @param String folderId
+         * @param String groupId
+         * @return Boolean
+         *      true = share folder with group successfull
+         *      error = share folder with group failed
+         */
         shareFolderWithGroup: function (folderId, groupId) {
             if (folderId && groupId) {
                 Folders.update({
@@ -158,6 +221,13 @@ if (Meteor.isServer) {
                     throw new Meteor.Error("folder", "Group id was not specified");
             }
         },
+        /*
+         * creates a user
+         * @param Object doc
+         * @return Boolean
+         *      true = create user successfull
+         *      error = create user failed
+         */
         createUserWithoutPassword: function (doc){
             // Important server-side check for security and data integrity
             //TODO checkUserRight
@@ -183,6 +253,13 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("user", "You have no rights to create a new User");
             }
         },
+        /*
+         * removes a user
+         * @param String userId
+         * @return Boolean
+         *      true = remove user successfull
+         *      error = remove user failed
+         */
         removeUser: function (userId) {
             if (checkUserRight(userId,Meteor.userId())) {
                 if (userId) {
@@ -223,8 +300,17 @@ if (Meteor.isServer) {
                     throw new Meteor.Error("user", "no user id specified");
                 }
                 return true;
+            }else{
+                throw new Meteor.Error("user", "You have no rights to remove a user");
             }
         },
+        /*
+         * updates user information
+         * @param Object doc
+         * @return Boolean
+         *      true = update user information successfull
+         *      error = update user information failed
+         */
         updateUserInformation: function (doc) {
                 //check(doc, Schema.user);
             //TODO checkUserRight
@@ -249,8 +335,15 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("user", "You have no rights to edit a user");
             }
         },
+        /*
+         * gives admin rights to a user
+         * @param String userId
+         * @return Boolean
+         *      true = set admin rights successfull
+         *      error = set admin rights failed
+         */
         promoteUserToAdmin: function (userId) {
-            if(userId, checkUserRight(Meteor.userId())) {
+            if(checkUserRight(userId, Meteor.userId())) {
                 var user = Meteor.users.update({
                         _id: doc.userId
                     }, {
@@ -259,10 +352,23 @@ if (Meteor.isServer) {
                         }
                     }
                 );
+                if(user)
+                    return true;
+
+                throw new Meteor.Error("user", "Promote user to admin failed");
+            }else{
+                throw new Meteor.Error("user", "You have no rights to promote this user to admin");
             }
         },
+        /*
+         * removes admin rights from a user
+         * @param String userId
+         * @return Boolean
+         *      true = admin rights remove successfull
+         *      error = admin rights remove failed
+         */
         degradeUserFromAdmin: function (userId) {
-            if(userId, checkUserRight(Meteor.userId())) {
+            if(checkUserRight(userId, Meteor.userId())) {
                 var user = Meteor.users.update({
                         _id: doc.userId
                     }, {
@@ -271,7 +377,24 @@ if (Meteor.isServer) {
                         }
                     }
                 );
+                if(user)
+                    return true;
+
+                throw new Meteor.Error("user", "Degrading the user failed");
+            }else{
+                throw new Meteor.Error("user", "You have no rights to degrade this user");
             }
+        },
+        /*
+         * inserts arbitrary fields to the profile of a user
+         * @param String userId
+         * @param Object fieldObject
+         * @return Boolean
+         *      true = insert successfull
+         *      false = insert failed
+         */
+        addProfileFields: function(userId, fieldObject){
+
         },
         /*
          * checks if a given username is already existing in the database
