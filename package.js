@@ -31,10 +31,10 @@ Package.onUse(function(api) {
   // client
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
-  api.addFiles(['lib/umShowUsers.js'],'client');
+  //api.addFiles(['lib/umShowUsers.js'],'client');
   api.addFiles('lib/templates/schema.js', ['client', 'server']);
-  api.addFiles(['lib/templates/createUser.html','lib/templates/createUser.js','lib/router.js','lib/templates/editUserp.html','lib/templates/editUserp.js'], 'client');
-  api.addFiles(['lib/templates/showUsersp.html','lib/templates/showUsersp.js','lib/templates/showUserp.html','lib/templates/showUserp.js'], 'client');
+  api.addFiles(['lib/templates/addUser.html','lib/templates/editUser.html','lib/templates/addUser.js','lib/router.js','lib/templates/editUser.js'], 'client');
+  api.addFiles(['lib/templates/showUsers.html','lib/templates/showUser.html','lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
   api.export('UserManagementTemplates', ['client', 'server']);
 });
 

@@ -1,4 +1,4 @@
-<template name="editUserp">
+<template name="umEditUser">
     {{#with user}}
         {{#autoForm schema=userschema doc=this id="createUserForm" type="method" meteormethod="updateUserInformation" validation="keyup"}}
             <fieldset>
@@ -7,12 +7,13 @@
                 {{> afQuickField name="emails.0.address" autocomplete="off"}}
                 {{> afQuickField name="username" autocomplete="off"}}
                 {{> afQuickField name="profile.admin"}}
+                {{> afQuickField name="profile.activated"}}
                 {{> afQuickField name="profile.fields"}}
 
                 <div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <button id="removeUser" type="click" class="btn btn-primary">Remove</button>
-                    <a href="/showUserp/{{_id}}">Cancel</a>
+                    <a href="/showUser/{{_id}}">Back</a>
                 </div>
             </fieldset>
         {{/autoForm}}

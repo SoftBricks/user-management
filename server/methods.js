@@ -334,6 +334,7 @@ if (Meteor.isServer) {
                             username: doc.username,
                             'profile.fullname': doc.profile.fullname,
                             'profile.admin': doc.profile.admin,
+                            'profile.activated':doc.profile.activated,
                             'profile.fields': doc.profile.fields
 
                         }

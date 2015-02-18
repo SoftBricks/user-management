@@ -1,4 +1,4 @@
-<template name="showUserp">
+<template name="umShowUser">
     {{#with user}}
         {{#autoForm schema=userschema doc=this id="createUserForm"}}
             <fieldset>
@@ -7,13 +7,14 @@
                 {{> afQuickField name="emails.0.address" autocomplete="off"}}
                 {{> afQuickField name="username" autocomplete="off"}}
                 {{> afQuickField name="profile.admin"}}
+                {{> afQuickField name="profile.activated"}}
                 {{> afQuickField name="profile.fields"}}
             </fieldset>
         {{/autoForm}}
 
 
         <!-- </div> -->
-        <a href="/editUserp/{{_id}}">Edit</a>
-        <a href="/showUsersp">Back</a>
+        <a href="/editUser/{{_id}}">Edit</a>
+        <a href="/showUsers">Back</a>
     {{/with}}
 </template>
