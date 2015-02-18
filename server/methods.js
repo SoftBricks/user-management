@@ -240,7 +240,7 @@ if (Meteor.isServer) {
                 //        element
                 //    });
                 //});
-
+                console.log(doc.profile.fields);
                 var profile = {
                     superAdmin: false,
                     admin: doc.profile.admin,
@@ -271,7 +271,8 @@ if (Meteor.isServer) {
          *      error = remove user failed
          */
         removeUser: function (userId) {
-            if (checkUserRight(userId,Meteor.userId())) {
+            //TODO check User right
+            if (true) {//checkUserRight(userId,Meteor.userId())
                 if (userId) {
                     var userToRemove = Meteor.users.findOne({_id: userId}, {
                         _id: 0,
@@ -280,7 +281,7 @@ if (Meteor.isServer) {
                         services: 0,
                         username: 0
                     });
-                    if (userToRemove && userToRemove.superAdmin === false) {
+                    if (userToRemove && userToRemove.profile.superAdmin === false) {
 
                         Meteor.users.remove({
                             _id: userId
@@ -321,23 +322,26 @@ if (Meteor.isServer) {
          *      true = update user information successfull
          *      error = update user information failed
          */
-        updateUserInformation: function (doc) {
+        updateUserInformation: function (doc, mod, documentId) {
                 //check(doc, Schema.user);
             //TODO checkUserRight
             if (true) {//checkUserRight(doc.userId, Meteor.userId(), "admin")
-
                 var user = Meteor.users.update({
-                        _id: doc.userId
+                        _id: documentId
                     }, {
                         $set: {
                             'emails.0.address': doc.emails[0].address,
                             username: doc.username,
-                            'profile.fullname': doc.fullname,
-                            'profile.admin': doc.admin
+                            'profile.fullname': doc.profile.fullname,
+                            'profile.admin': doc.profile.admin,
+                            'profile.fields': doc.profile.fields
+
                         }
                     }
                 );
-                if (!user)
+                //if(user == 1)
+                //    Accounts.sendVerificationEmail(documentId);
+                if (user != 1)
                     throw new Meteor.Error("user", "updating the user failed");
 
                 return true;
