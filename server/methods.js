@@ -366,10 +366,10 @@ if (Meteor.isServer) {
                         }
                     }
                 );
-                if(user)
-                    return true;
+                if (user != 1)
+                    throw new Meteor.Error("user", "Promote user to admin failed");
 
-                throw new Meteor.Error("user", "Promote user to admin failed");
+                return true;
             }else{
                 throw new Meteor.Error("user", "You have no rights to promote this user to admin");
             }
@@ -391,24 +391,64 @@ if (Meteor.isServer) {
                         }
                     }
                 );
-                if(user)
-                    return true;
+                if (user != 1)
+                    throw new Meteor.Error("user", "Degrading of user failed");
 
-                throw new Meteor.Error("user", "Degrading the user failed");
+                return true;
             }else{
                 throw new Meteor.Error("user", "You have no rights to degrade this user");
             }
         },
         /*
-         * inserts arbitrary fields to the profile of a user
+         * activates a user
          * @param String userId
-         * @param Object fieldObject
          * @return Boolean
-         *      true = insert successfull
-         *      false = insert failed
+         *      true = activation successfull
+         *      error = activation failed
          */
-        addProfileFields: function(userId, fieldObject){
+        activateUser: function(userId){
+            if(checkUserRight(userId, Meteor.userId())){
+                var user = Meteor.users.update({
+                        _id: userId
+                    }, {
+                        $set: {
+                            'profile.activated': true
+                        }
+                    }
+                );
 
+                if (user != 1)
+                    throw new Meteor.Error("user", "User activation failed");
+
+                return true;
+            }else{
+                throw new Meteor.Error("user", "You have no rights to activate this user");
+            }
+        },
+        /*
+         * deactivates a user
+         * @param String userId
+         * @return Boolean
+         *      true = deactivation successfull
+         *      error = deactivation failed
+         */
+        deactivateUser: function(userId){
+            if(checkUserRight(userId, Meteor.userId())){
+                var user = Meteor.users.update({
+                        _id: userId
+                    }, {
+                        $set: {
+                            'profile.activated': false
+                        }
+                    }
+                );
+                if (user != 1)
+                    throw new Meteor.Error("user", "User deactivation failed");
+
+                return true;
+            }else{
+                throw new Meteor.Error("user", "You have no rights to activate this user");
+            }
         },
         /*
          * checks if a given username is already existing in the database
