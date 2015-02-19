@@ -22,8 +22,9 @@ Package.onUse(function(api) {
   api.imply('aldeed:simple-schema');
   api.use(['aldeed:collection2@2.3.2']);
   api.imply('aldeed:collection2');
-  api.use('alethes:pages',['client', 'server']);
-  api.imply('alethes:pages',['client', 'server']);
+
+  api.use('alethes:pages@1.8.3');
+  api.imply('alethes:pages');
 
   // server
   api.addFiles('server/publications.js', 'server');
@@ -34,9 +35,9 @@ Package.onUse(function(api) {
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
   //api.addFiles(['lib/umShowUsers.js'],'client');
-  api.addFiles('lib/templates/schema.js', ['client', 'server']);
   api.addFiles(['lib/templates/addUser.js','lib/router.js','lib/templates/editUser.js'], 'client');
   api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
+  api.addFiles('lib/templates/schema.js', ['client', 'server']);
   api.export('UserManagementTemplates', ['client', 'server']);
 });
 
