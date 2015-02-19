@@ -25,6 +25,8 @@ Package.onUse(function(api) {
 
   api.use('alethes:pages@1.8.3');
   api.imply('alethes:pages');
+  api.use('stevezhu:lodash@1.0.2');
+  api.imply('stevezhu:lodash');
 
   // server
   api.addFiles('server/publications.js', 'server');
@@ -35,7 +37,7 @@ Package.onUse(function(api) {
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
   //api.addFiles(['lib/umShowUsers.js'],'client');
-  api.addFiles(['lib/templates/addUser.js','lib/router.js','lib/templates/editUser.js'], 'client');
+  api.addFiles(['lib/templates/addUser.js','lib/router.js','lib/templates/editUser.js', 'lib/templates/userSearch.js'], 'client');
   api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
   api.addFiles('lib/templates/schema.js', ['client', 'server']);
   api.export('UserManagementTemplates', ['client', 'server']);
