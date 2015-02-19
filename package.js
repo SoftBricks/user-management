@@ -22,6 +22,8 @@ Package.onUse(function(api) {
   api.imply('aldeed:simple-schema');
   api.use(['aldeed:collection2@2.3.2']);
   api.imply('aldeed:collection2');
+  api.use('alethes:pages',['client', 'server']);
+  api.imply('alethes:pages',['client', 'server']);
 
   // server
   api.addFiles('server/publications.js', 'server');

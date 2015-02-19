@@ -4,7 +4,7 @@ if (Meteor.isServer) {
      * @return String
      *      password with length 10
      */
-    var generatePassword = function () {
+    generatePassword = function () {
         var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
         var string_length = 10;
         var randomstring = '';
@@ -240,7 +240,6 @@ if (Meteor.isServer) {
                 //        element
                 //    });
                 //});
-                console.log(doc.profile.fields);
                 var profile = {
                     superAdmin: false,
                     admin: doc.profile.admin,
@@ -254,6 +253,8 @@ if (Meteor.isServer) {
                     username: doc.username,
                     profile: profile
                 };
+
+
                 user = Accounts.createUser(user);
                 if (user)
                     Accounts.sendEnrollmentEmail(user);
