@@ -22,6 +22,7 @@ Package.onUse(function(api) {
   api.imply('aldeed:simple-schema');
   api.use(['aldeed:collection2@2.3.2']);
   api.imply('aldeed:collection2');
+  api.use('softbricks:user-management-groups', ['client', 'server']);
 
   api.use('alethes:pages@1.8.3');
   api.imply('alethes:pages');
