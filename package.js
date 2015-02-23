@@ -22,6 +22,8 @@ Package.onUse(function(api) {
   api.imply('aldeed:simple-schema');
   api.use(['aldeed:collection2@2.3.2']);
   api.imply('aldeed:collection2');
+
+  api.use('email', ['server']);
   // this should not be in here
   // api.use('softbricks:user-management-groups', ['client', 'server']);
 

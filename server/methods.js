@@ -152,7 +152,7 @@ if (Meteor.isServer) {
          */
         removeUser: function (userId) {
             //TODO check User right
-            if (true) {//checkUserRight(userId,Meteor.userId())
+            if (checkUserRight(userId,Meteor.userId())) {//checkUserRight(userId,Meteor.userId())
                 if (userId) {
                     var userToRemove = Meteor.users.findOne({_id: userId}, {
                         _id: 0,
