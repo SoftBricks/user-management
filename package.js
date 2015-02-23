@@ -22,7 +22,8 @@ Package.onUse(function(api) {
   api.imply('aldeed:simple-schema');
   api.use(['aldeed:collection2@2.3.2']);
   api.imply('aldeed:collection2');
-  api.use('softbricks:user-management-groups', ['client', 'server']);
+  // this should not be in here
+  // api.use('softbricks:user-management-groups', ['client', 'server']);
 
   api.use('alethes:pages@1.8.3');
   api.imply('alethes:pages');
@@ -41,8 +42,10 @@ Package.onUse(function(api) {
   api.addFiles(['lib/templates/addUser.js','lib/router.js','lib/templates/editUser.js', 'lib/templates/userSearch.js'], 'client');
   api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
   api.addFiles('lib/templates/schema.js', ['client', 'server']);
-  api.export('UserManagementTemplates', ['client', 'server']);
+
   api.addFiles(['lib/templates/userListItem.js'], 'client');
+
+  api.export('UserManagementTemplates', ['client', 'server']);
 });
 
 Package.onTest(function(api) {
