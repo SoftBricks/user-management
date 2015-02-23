@@ -22,6 +22,7 @@ Package.onUse(function(api) {
   api.imply('aldeed:simple-schema');
   api.use(['aldeed:collection2@2.3.2']);
   api.imply('aldeed:collection2');
+  api.use('tap:i18n@1.4.0', ['client', 'server']);
 
   api.use('email', ['server']);
   // this should not be in here
@@ -31,6 +32,11 @@ Package.onUse(function(api) {
   api.imply('alethes:pages');
   api.use('stevezhu:lodash@1.0.2');
   api.imply('stevezhu:lodash');
+
+
+  // You must load your package's package-tap.i18n before you load any
+  // template
+  api.add_files("package-tap.i18n", ["client", "server"]);
 
   // server
   api.addFiles('server/publications.js', 'server');
@@ -45,9 +51,10 @@ Package.onUse(function(api) {
   api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
   api.addFiles('lib/templates/schema.js', ['client', 'server']);
 
-  api.addFiles(['lib/templates/userListItem.js'], 'client');
-
   api.addFiles(['lib/templates/userListItem.js','lib/templates/addGroup.js'], 'client');
+
+  // i18n files
+  api.addFiles(['i18n/user.de.i18n.json', 'i18n/user.en.i18n.json'], ['client', 'server']);
 
   api.export('UserManagementTemplates', ['client', 'server']);
   
