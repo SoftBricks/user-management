@@ -45,7 +45,10 @@ Package.onUse(function(api) {
 
   api.addFiles(['lib/templates/userListItem.js'], 'client');
 
+  api.addFiles(['lib/templates/userListItem.js','lib/templates/addGroup.js'], 'client');
+
   api.export('UserManagementTemplates', ['client', 'server']);
+  
 });
 
 Package.onTest(function(api) {
