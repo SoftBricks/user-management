@@ -6,7 +6,7 @@ The package softbricks:user-management contains all the core logic and templates
 It uses iron-router for basic routing and content protection.
 
 ## The UserManagement Guide
-go to Guide.md
+go to [Guide](https://github.com/SoftBricks/user-management/blob/master/Guide.md)
 
 ## Internal API
 [here](https://github.com/SoftBricks/user-management/blob/master/internal.api.md)

@@ -25,8 +25,6 @@ Package.onUse(function(api) {
   api.use('tap:i18n@1.4.0', ['client', 'server']);
 
   api.use('email', ['server']);
-  // this should not be in here
-  // api.use('softbricks:user-management-groups', ['client', 'server']);
 
   api.use('alethes:pages@1.8.3');
   api.imply('alethes:pages');
@@ -51,12 +49,15 @@ Package.onUse(function(api) {
   api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
   api.addFiles('lib/templates/schema.js', ['client', 'server']);
 
-  api.addFiles(['lib/templates/userListItem.js','lib/templates/addGroup.js'], 'client');
+  api.addFiles(['lib/templates/userListItem.js']);
 
   // i18n files
   api.addFiles(['i18n/user.de.i18n.json', 'i18n/user.en.i18n.json'], ['client', 'server']);
 
   api.export('UserManagementTemplates', ['client', 'server']);
+  api.export('Schema',['client','server']);
+  api.export('UM',['client','server']);
+  api.export('SchemaPlain',['client','server']);
   
 });
 
