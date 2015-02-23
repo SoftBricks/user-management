@@ -42,7 +42,7 @@ Package.onUse(function(api) {
   api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
   api.addFiles('lib/templates/schema.js', ['client', 'server']);
   api.export('UserManagementTemplates', ['client', 'server']);
-  api.addFiles(['lib/templates/userListItem.js'], 'client');
+  api.addFiles(['lib/templates/userListItem.js','lib/templates/addGroup.js'], 'client');
 });
 
 Package.onTest(function(api) {
