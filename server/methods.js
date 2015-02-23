@@ -151,8 +151,7 @@ if (Meteor.isServer) {
          *      error = remove user failed
          */
         removeUser: function (userId) {
-            //TODO check User right
-            if (checkUserRight(userId,Meteor.userId())) {//checkUserRight(userId,Meteor.userId())
+            if (checkUserRight(userId,Meteor.userId())) {
                 if (userId) {
                     var userToRemove = Meteor.users.findOne({_id: userId}, {
                         _id: 0,
@@ -203,9 +202,7 @@ if (Meteor.isServer) {
          *      error = update user information failed
          */
         updateUserInformation: function (doc, mod, documentId) {
-                //check(doc, Schema.user);
-            //TODO checkUserRight
-            if (true) {//checkUserRight(doc.userId, Meteor.userId(), "admin")
+            if (checkUserRight(doc.userId, Meteor.userId(), "admin")) {
                 var user = Meteor.users.update({
                         _id: documentId
                     }, {
