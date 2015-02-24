@@ -1,5 +1,9 @@
 {
+	"abort": "Abbrechen",
 	"addField": "Feld hinzufügen",
 	"save": "Speichern",
-	"delete": "Löschen"
+	"delete": "Löschen",
+	"remove": "Entfernen",
+	"removeUserQuestion": "Nutzer wirklich entfernen?",
+	"removeUserInfo": "Alle Informationen über diese Nutzer werden unwiederruflich entfernt!"
 }

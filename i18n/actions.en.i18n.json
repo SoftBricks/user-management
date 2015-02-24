@@ -1,5 +1,9 @@
 {
+	"abort": "Abort",
 	"addField": "Add field",
 	"save": "Save",
-	"delete": "Delete"
+	"delete": "Delete",
+	"remove": "Remove",
+	"removeUserQuestion": "Are you sure?",
+	"removeUserInfo": "All information about this user will be deleted permanently!"
 }
