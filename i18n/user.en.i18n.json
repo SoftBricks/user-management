@@ -1,8 +1,11 @@
 {
-  "email_address": "Email address",
-  "fullname": "Fullname",
-  "user_status": "User status",
-  "identifier": "Identifier",
-  "value": "Value",
-  "username": "Username"
+	"additionalFields": "Additional Fields",
+	"emailAddress": "Email address",
+	"editUser": "Edit User",
+	"userInfo": "User Info",
+	"fullname": "Fullname",
+	"user_status": "Account status",
+	"identifier": "Identifier",
+	"value": "Value",
+	"username": "Username"
 }

@@ -12,7 +12,7 @@
     // the package. By using the name of another package you can use your package to
     // add to that package or modify its translations. You can also set the namespace to
     // "project" to add translations that will be available in the project level.
-    "namespace": null,
+    "namespace": "project",
 
     "supported_languages" : ["en", "de"],
 

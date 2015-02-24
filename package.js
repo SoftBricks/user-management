@@ -13,8 +13,8 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.0.3.1');
 
-  api.use(['templating'], 'client');
-  api.use(['accounts-password', 'underscore', 'check'], ['client', 'server']);
+  api.use(['templating', 'session'], 'client');
+  api.use(['accounts-password', 'underscore', 'check', 'tracker'], ['client', 'server']);
   api.use(['useraccounts:core']);
   api.use(['aldeed:autoform@4.2.2']);
   api.imply('aldeed:autoform');
@@ -53,6 +53,8 @@ Package.onUse(function(api) {
 
   // i18n files
   api.addFiles(['i18n/user.de.i18n.json', 'i18n/user.en.i18n.json'], ['client', 'server']);
+  api.addFiles(['i18n/errors.de.i18n.json', 'i18n/errors.en.i18n.json'], ['client', 'server']);
+  api.addFiles(['i18n/actions.de.i18n.json', 'i18n/actions.en.i18n.json'], ['client', 'server']);
 
   api.export('UserManagementTemplates', ['client', 'server']);
   api.export('Schema',['client','server']);
