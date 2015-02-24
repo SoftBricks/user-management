@@ -1,0 +1,9 @@
+{
+	"group": "Gruppe",
+	"groupname": "Gruppenname",
+	"leader": "Leiter",
+	"parentGroup": "Untergruppe von",
+
+	"groupDetail": "Gruppen Info",
+	"editGroup": "Gruppe Bearbeiten"
+}
