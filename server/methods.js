@@ -109,8 +109,7 @@ if (Meteor.isServer) {
          */
         createUserWithoutPassword: function (doc){
             // Important server-side check for security and data integrity
-            //TODO checkUserRight
-            if (true) { //checkUserRight("",Meteor.userId())
+            if (checkUserRight("",Meteor.userId())) {
                 //check(doc, Schema.user);
                 //var password = generatePassword();
                 var fields;
