@@ -30,6 +30,8 @@ Package.onUse(function(api) {
   api.imply('alethes:pages');
   api.use('stevezhu:lodash@1.0.2');
   api.imply('stevezhu:lodash');
+  api.use('jparker:gravatar@0.3.1');
+  api.imply('jparker:gravatar');
 
 
   // You must load your package's package-tap.i18n before you load any
