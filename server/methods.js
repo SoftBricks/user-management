@@ -33,25 +33,27 @@ if (Meteor.isServer) {
      *      true = user is allowed to do the action
      *      error = user is not allowed to do the action
      */
-    var checkUserRight = function (userId, currentUserId) {
+    checkRights = {
+        'checkUserRight': function (userId, currentUserId) {
 
-        if (currentUserId === userId)
-            return true;
-
-        var admin = Meteor.users.findOne({_id: currentUserId}, {
-            _id: 0,
-            createdAt: 0,
-            emails: 0,
-            services: 0,
-            username: 0
-        });
-        if (admin) {
-            if (admin.profile && (admin.profile.superAdmin || admin.profile.admin))
+            if (typeof userId !== 'undefined' && currentUserId === userId)
                 return true;
+
+            var admin = Meteor.users.findOne({_id: currentUserId}, {
+                _id: 0,
+                createdAt: 0,
+                emails: 0,
+                services: 0,
+                username: 0
+            });
+            if (admin) {
+                if (admin.profile && (admin.profile.superAdmin || admin.profile.admin))
+                    return true;
+            }
+
+            throw new Meteor.Error("checkUserRight", "You have no right to do this!!");
+
         }
-
-        throw new Meteor.Error("checkUserRight", "You have no right to do this!!");
-
     };
     Meteor.methods({
         /*
@@ -109,7 +111,7 @@ if (Meteor.isServer) {
          */
         createUserWithoutPassword: function (doc){
             // Important server-side check for security and data integrity
-            if (checkUserRight("",Meteor.userId())) {
+            if (checkRights.checkUserRight("",Meteor.userId())) {
                 //check(doc, Schema.user);
                 //var password = generatePassword();
                 var fields;
@@ -150,7 +152,7 @@ if (Meteor.isServer) {
          *      error = remove user failed
          */
         removeUser: function (userId) {
-            if (checkUserRight(userId,Meteor.userId())) {
+            if (checkRights.checkUserRight(userId,Meteor.userId())) {
                 if (userId) {
                     var userToRemove = Meteor.users.findOne({_id: userId}, {
                         _id: 0,
@@ -201,7 +203,7 @@ if (Meteor.isServer) {
          *      error = update user information failed
          */
         updateUserInformation: function (doc, mod, documentId) {
-            if (checkUserRight(doc.userId, Meteor.userId(), "admin")) {
+            if (checkRights.checkUserRight(doc.userId, Meteor.userId(), "admin")) {
                 var user = Meteor.users.update({
                         _id: documentId
                     }, {
@@ -234,7 +236,7 @@ if (Meteor.isServer) {
          *      error = set admin rights failed
          */
         promoteUserToAdmin: function (userId) {
-            if(checkUserRight(userId, Meteor.userId())) {
+            if(checkRights.checkUserRight(userId, Meteor.userId())) {
                 var user = Meteor.users.update({
                         _id: doc.userId
                     }, {
@@ -259,7 +261,7 @@ if (Meteor.isServer) {
          *      error = admin rights remove failed
          */
         degradeUserFromAdmin: function (userId) {
-            if(checkUserRight(userId, Meteor.userId())) {
+            if(checkRights.checkUserRight(userId, Meteor.userId())) {
                 var user = Meteor.users.update({
                         _id: doc.userId
                     }, {
@@ -284,7 +286,7 @@ if (Meteor.isServer) {
          *      error = activation failed
          */
         activateUser: function(userId){
-            if(checkUserRight(userId, Meteor.userId())){
+            if(checkRights.checkUserRight(userId, Meteor.userId())){
                 var user = Meteor.users.update({
                         _id: userId
                     }, {
@@ -310,7 +312,7 @@ if (Meteor.isServer) {
          *      error = deactivation failed
          */
         deactivateUser: function(userId){
-            if(checkUserRight(userId, Meteor.userId())){
+            if(checkRights.checkUserRight(userId, Meteor.userId())){
                 var user = Meteor.users.update({
                         _id: userId
                     }, {
