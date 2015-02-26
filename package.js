@@ -23,6 +23,7 @@ Package.onUse(function(api) {
   api.use(['aldeed:collection2@2.3.2']);
   api.imply('aldeed:collection2');
   api.use('tap:i18n@1.4.0', ['client', 'server']);
+  api.use('softwarerero:accounts-t9n@1.0.6', ['client', 'server']);
 
   api.use('email', ['server']);
 
