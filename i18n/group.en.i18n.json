@@ -3,6 +3,8 @@
 	"groupname": "Groupname",
 	"leader": "Leader",
 	"parentGroup": "Subgroup of",
+  	"users": "Members",
+  	"groups": "Group id's",
 
 	"groupDetail": "Group Info",
 	"editGroup": "Edit Group"

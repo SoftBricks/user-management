@@ -64,6 +64,7 @@ Package.onUse(function(api) {
   api.export('UM',['client','server']);
   api.export('SchemaPlain',['client','server']);
   api.export('checkRights',['server']);
+  api.export('__', ['client','server']);
   
 });
 
