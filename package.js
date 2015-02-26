@@ -26,7 +26,7 @@ Package.onUse(function(api) {
 
   api.use('email', ['server']);
 
-  api.use('alethes:pages@1.8.3');
+  api.use('alethes:pages@1.8.4');
   api.imply('alethes:pages');
   api.use('stevezhu:lodash@1.0.2');
   api.imply('stevezhu:lodash');
