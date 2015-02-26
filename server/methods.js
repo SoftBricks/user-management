@@ -34,8 +34,8 @@ if (Meteor.isServer) {
      *      error = user is not allowed to do the action
      */
     checkRights = {
-        'checkUserRight': function (userId, currentUserId) {
-
+        'checkUserRight': function (userId) {
+            currentUserId = Meteor.userId();
             if (typeof userId !== 'undefined' && currentUserId === userId)
                 return true;
 
@@ -53,6 +53,17 @@ if (Meteor.isServer) {
 
             throw new Meteor.Error("checkUserRight", "You have no right to do this!!");
 
+        },
+        'makeAndRemoveAdmin': function (userId){
+            currentUserId = Meteor.userId();
+            if(currentUserId == userId && Meteor.user().profile.superAdmin == false && Meteor.user().profile.admin == false){
+                return false;
+            }
+            if ((Meteor.user().profile.superAdmin == true || Meteor.user().profile.admin == true) && currentUserId !== userId){
+                return true;
+            }
+
+            return false;
         }
     };
     Meteor.methods({
@@ -203,23 +214,36 @@ if (Meteor.isServer) {
          *      error = update user information failed
          */
         updateUserInformation: function (doc, mod, documentId) {
-            if (checkRights.checkUserRight(doc.userId, Meteor.userId(), "admin")) {
-                var user = Meteor.users.update({
-                        _id: documentId
-                    }, {
+            if (checkRights.checkUserRight(documentId, Meteor.userId(), "admin")) {
+                var update;
+                if(checkRights.makeAndRemoveAdmin(documentId) === true){
+                    update = {
                         $set: {
                             'emails.0.address': doc.emails[0].address,
                             username: doc.username,
                             'profile.fullname': doc.profile.fullname,
                             'profile.admin': doc.profile.admin,
-                            'profile.activated':doc.profile.activated,
+                            'profile.activated': doc.profile.activated,
                             'profile.fields': doc.profile.fields
 
                         }
                     }
+                }else{
+                    update = {
+                        $set: {
+                            'emails.0.address': doc.emails[0].address,
+                            username: doc.username,
+                            'profile.fullname': doc.profile.fullname,
+                            'profile.fields': doc.profile.fields
+
+                        }
+                    }
+                }
+                var user = Meteor.users.update({
+                        _id: documentId
+                    }, update
                 );
-                //if(user == 1)
-                //    Accounts.sendVerificationEmail(documentId);
+
                 if (user != 1)
                     throw new Meteor.Error("user", "updating the user failed");
 
