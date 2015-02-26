@@ -163,47 +163,51 @@ if (Meteor.isServer) {
          *      error = remove user failed
          */
         removeUser: function (userId) {
-            if (checkRights.checkUserRight(userId,Meteor.userId())) {
-                if (userId) {
-                    var userToRemove = Meteor.users.findOne({_id: userId}, {
-                        _id: 0,
-                        createdAt: 0,
-                        emails: 0,
-                        services: 0,
-                        username: 0
-                    });
-                    if (userToRemove && userToRemove.profile.superAdmin === false) {
-
-                        Meteor.users.remove({
-                            _id: userId
+            if(userId !== Meteor.userId()) {
+                if (checkRights.checkUserRight(userId, Meteor.userId())) {
+                    if (userId) {
+                        var userToRemove = Meteor.users.findOne({_id: userId}, {
+                            _id: 0,
+                            createdAt: 0,
+                            emails: 0,
+                            services: 0,
+                            username: 0
                         });
+                        if (userToRemove && userToRemove.profile.superAdmin === false) {
 
-                        var to = userToRemove.emails[0].address;
-                        var from = Meteor.user().emails[0].address;
-                        var subject = "Your account was removed";
-                        var text = "Your admin has deleted your Account. Please contact him to get further information.";
+                            Meteor.users.remove({
+                                _id: userId
+                            });
 
-                        check([to, from, subject, text], [String]);
+                            var to = userToRemove.emails[0].address;
+                            var from = Meteor.user().emails[0].address;
+                            var subject = "Your account was removed";
+                            var text = "Your admin has deleted your Account. Please contact him to get further information.";
 
-                        // Let other method calls from the same client start running,
-                        // without waiting for the email sending to complete.
-                        this.unblock();
+                            check([to, from, subject, text], [String]);
 
-                        Email.send({
-                            to: to,
-                            from: from,
-                            subject: subject,
-                            text: text
-                        });
+                            // Let other method calls from the same client start running,
+                            // without waiting for the email sending to complete.
+                            this.unblock();
+
+                            Email.send({
+                                to: to,
+                                from: from,
+                                subject: subject,
+                                text: text
+                            });
+                        } else {
+                            throw new Meteor.Error("user", "superAdmin can not be removed!");
+                        }
                     } else {
-                        throw new Meteor.Error("user", "superAdmin can not be removed!");
+                        throw new Meteor.Error("user", "no user id specified");
                     }
+                    return true;
                 } else {
-                    throw new Meteor.Error("user", "no user id specified");
+                    throw new Meteor.Error("user", "You have no rights to remove a user");
                 }
-                return true;
             }else{
-                throw new Meteor.Error("user", "You have no rights to remove a user");
+                throw new Meteor.Error("user", "You are not allowed to delete yourself");
             }
         },
         /*
