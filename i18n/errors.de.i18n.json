@@ -33,5 +33,9 @@
 
     "schema-passwordMismatch": "Die Passwörter stimmen nicht überein",
     "schema-notUniqueUsername": "Der Benutzername ist bereits vergeben",
-    "schema-notUniqueEmail": "Es existiert bereits ein Nutzer mit dieser Email Adresse"
+    "schema-notUniqueEmail": "Es existiert bereits ein Nutzer mit dieser Email Adresse",
+
+    "schema-groupnameExisting": "Gruppe existiert bereits",
+    "schema-groupnameNotExisting": "Gruppe existiert nicht",
+    "schema-parentGroupNotSelf": "Gruppe kann keine Untergruppe von sich selbst sein"
 }

@@ -32,5 +32,9 @@
     
     "schema-passwordMismatch": "Passwords do not match",
     "schema-notUniqueUsername": "Username already exists",
-    "schema-notUniqueEmail": "Email already exists"
+    "schema-notUniqueEmail": "Email already exists",
+
+    "schema-groupnameExisting": "Groupname already exists",
+    "schema-groupnameNotExisting": "Group does not exist",
+    "schema-parentGroupNotSelf": "Parent Group can not be itself"
 }

@@ -196,6 +196,12 @@ if (Meteor.isServer) {
                                 subject: subject,
                                 text: text
                             });
+
+                            //Run hooked functions
+                            _.each(UserManagementTemplates.onRemoveUser, function (func){
+                                func(userId);
+                            });
+
                         } else {
                             throw new Meteor.Error("user", "superAdmin can not be removed!");
                         }
