@@ -3,10 +3,12 @@ Meteor.publish("users", function () {
 });
 
 publishUsers = function(context){
-    var user = Meteor.users.findOne({_id: context.userId});
-    if (user.profile.admin === true || user.profile.superAdmin === true) {
-        return Meteor.users.find();
-    } else {
-        return Meteor.users.find({_id: context.userId});
+    if(context.userId){
+        var user = Meteor.users.findOne({_id: context.userId});
+        if (user.profile.admin === true || user.profile.superAdmin === true) {
+            return Meteor.users.find();
+        } else {
+            return Meteor.users.find({_id: context.userId});
+        }
     }
 };
