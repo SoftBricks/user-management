@@ -34,33 +34,35 @@ if (Meteor.isServer) {
      *      error = user is not allowed to do the action
      */
     checkRights = {
-        'checkUserRight': function (userId) {
-            currentUserId = Meteor.userId();
-            if (typeof userId !== 'undefined' && currentUserId === userId)
+        'checkUserRight': function (userId, currentUserId) {
+            if (typeof userId !== 'undefined' && typeof currentUserId !== 'undefined' && currentUserId === userId)
                 return true;
 
-            var admin = Meteor.users.findOne({_id: currentUserId}, {
-                _id: 0,
-                createdAt: 0,
-                emails: 0,
-                services: 0,
-                username: 0
-            });
-            if (admin) {
-                if (admin.profile && (admin.profile.superAdmin || admin.profile.admin))
-                    return true;
+            if(typeof currentUserId !== 'undefined') {
+                var admin = Meteor.users.findOne({_id: currentUserId}, {
+                    _id: 0,
+                    createdAt: 0,
+                    emails: 0,
+                    services: 0,
+                    username: 0
+                });
+                if (admin) {
+                    if (admin.profile && (admin.profile.superAdmin || admin.profile.admin))
+                        return true;
+                }
             }
 
             throw new Meteor.Error("checkUserRight", "You have no right to do this!!");
 
         },
-        'makeAndRemoveAdmin': function (userId){
-            currentUserId = Meteor.userId();
-            if(currentUserId == userId && Meteor.user().profile.superAdmin == false && Meteor.user().profile.admin == false){
-                return false;
-            }
-            if ((Meteor.user().profile.superAdmin == true || Meteor.user().profile.admin == true) && currentUserId !== userId){
-                return true;
+        'makeAndRemoveAdmin': function (userId, currentUserId, userObject){
+            if(typeof userObject !== 'undefined'){
+                if(currentUserId == userId && userObject.profile.superAdmin == false && userObject.profile.admin == false){
+                    return false;
+                }
+                if ((userObject.profile.superAdmin == true || userObject.profile.admin == true) && currentUserId !== userId){
+                    return true;
+                }
             }
 
             return false;
@@ -224,9 +226,9 @@ if (Meteor.isServer) {
          *      error = update user information failed
          */
         updateUserInformation: function (doc, mod, documentId) {
-            if (checkRights.checkUserRight(documentId, Meteor.userId(), "admin")) {
+            if (checkRights.checkUserRight(documentId, Meteor.userId())) {
                 var update;
-                if(checkRights.makeAndRemoveAdmin(documentId) === true){
+                if(checkRights.makeAndRemoveAdmin(documentId,Meteor.userId(), Meteor.user()) === true){
                     update = {
                         $set: {
                             'emails.0.address': doc.emails[0].address,
