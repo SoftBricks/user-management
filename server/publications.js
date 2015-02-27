@@ -1,7 +1,4 @@
 Meteor.publish("users", function() {
-    if (typeof UserManagementTemplates.customPublication === 'function' && arguments[0]) {
-        return UserManagementTemplates.customPublication(arguments);
-    }
     return publishUsers(this);
 });
 
