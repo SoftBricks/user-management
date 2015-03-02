@@ -33,6 +33,8 @@ Package.onUse(function(api) {
   api.imply('stevezhu:lodash');
   api.use('jparker:gravatar@0.3.1');
   api.imply('jparker:gravatar');
+  api.use('simple:reactive-method@1.0.0');
+  api.imply('simple:reactive-method');
 
 
   // You must load your package's package-tap.i18n before you load any
@@ -73,4 +75,8 @@ Package.onTest(function(api) {
   api.use('tinytest');
   api.use('softbricks:user-management');
   api.addFiles('softbricks:user-management-tests.js');
+});
+
+Npm.depends({
+  "flat": "1.5.0"
 });
