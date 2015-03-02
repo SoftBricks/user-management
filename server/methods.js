@@ -149,12 +149,12 @@ if (Meteor.isServer) {
 
 
                 user = Accounts.createUser(user);
-                if (user)
+                if (user){
                     Accounts.sendEnrollmentEmail(user);
+                    return true;
+                }
                 if (!user)
                     throw new Meteor.Error("user", "User has not been created");
-            }else{
-                throw new Meteor.Error("user", "You have no rights to create a new User");
             }
         },
         /*
@@ -177,32 +177,34 @@ if (Meteor.isServer) {
                         });
                         if (userToRemove && userToRemove.profile.superAdmin === false) {
 
-                            Meteor.users.remove({
+                            var success = Meteor.users.remove({
                                 _id: userId
                             });
+                            if(success.nRemoved === 1){
 
-                            var to = userToRemove.emails[0].address;
-                            var from = Meteor.user().emails[0].address;
-                            var subject = "Your account was removed";
-                            var text = "Your admin has deleted your Account. Please contact him to get further information.";
+                                var to = userToRemove.emails[0].address;
+                                var from = Meteor.user().emails[0].address;
+                                var subject = "Your account was removed";
+                                var text = "Your admin has deleted your Account. Please contact him to get further information.";
 
-                            check([to, from, subject, text], [String]);
+                                check([to, from, subject, text], [String]);
 
-                            // Let other method calls from the same client start running,
-                            // without waiting for the email sending to complete.
-                            this.unblock();
+                                // Let other method calls from the same client start running,
+                                // without waiting for the email sending to complete.
+                                this.unblock();
 
-                            Email.send({
-                                to: to,
-                                from: from,
-                                subject: subject,
-                                text: text
-                            });
+                                Email.send({
+                                    to: to,
+                                    from: from,
+                                    subject: subject,
+                                    text: text
+                                });
 
-                            //Run hooked functions
-                            _.each(UserManagementTemplates.onRemoveUser, function (func){
-                                func(userId);
-                            });
+                                //Run hooked functions
+                                _.each(UserManagementTemplates.onRemoveUser, function (func){
+                                    func(userId);
+                                });
+                            }
 
                         } else {
                             throw new Meteor.Error("user", "superAdmin can not be removed!");
@@ -211,8 +213,6 @@ if (Meteor.isServer) {
                         throw new Meteor.Error("user", "no user id specified");
                     }
                     return true;
-                } else {
-                    throw new Meteor.Error("user", "You have no rights to remove a user");
                 }
             }else{
                 throw new Meteor.Error("user", "You are not allowed to delete yourself");
@@ -404,6 +404,57 @@ if (Meteor.isServer) {
                 return true;
 
             return false;
+        },
+
+        extendSchema: function(schemaObject){
+
+            var extendUserSchema = {
+                'profile.myNewField': {
+                    type: String,
+                    label: "bla",
+                    optional:false
+                }
+            };
+
+            if(typeof SchemaPlain !== 'undefined')
+                _.merge(SchemaPlain.user, extendUserSchema);
+
+            Schema.user = new SimpleSchema(SchemaPlain.user);
+            Meteor.users.attachSchema(Schema.user);
+
+            var schema = SchemaCol.findOne({identifier: 'user'});
+            if(typeof schema !== 'undefined'){
+                SchemaCol.update({identifier: 'user'},{ $set:{
+                    user: JSON.stringify(SchemaPlain.user)
+                }});
+            }else{
+                SchemaCol.insert({
+                    user: JSON.stringify(SchemaPlain.user),
+                    identifier: "user"
+                });
+            }
+        },
+        getUserSchema: function(){
+            var schema = SchemaCol.findOne({identifier: 'user'});
+            if(typeof schema !== 'undefined'){
+                return schema;
+            }else{
+                return SchemaPlain.user;
+            }
+        },
+        removeUserKey: function(key){
+            var schema = SchemaCol.findOne({identifier: 'user'});
+            var parsedSchema = JSON.parse(schema.user);
+            var res = _.has(parsedSchema, key);
+            if(res === true){
+                delete parsedSchema[key];
+                SchemaCol.update({identifier: 'user'},{ $set:{
+                    user: JSON.stringify(parsedSchema)
+                }});
+            }else {
+                return false;
+            }
+            return true;
         }
     });
 }
