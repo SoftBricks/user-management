@@ -1,3 +1,4 @@
+var flatten = Npm.require("flat");
 if (Meteor.isServer) {
     /*
      * Generates a random password
@@ -412,23 +413,38 @@ if (Meteor.isServer) {
          *      true = schema updated
          *      false = schema not updated
          */
-        extendSchema: function(schemaObject){
+        extendSchema: function(type, label, key){
+            schemaObject = {
+            };
 
-            if(schemaObject){
+            schemaObject[key] = {
+                type: type,
+                label: label
+            };
+
+            mergeObj = {};
+            mergeObj[key] = {
+                type: eval(type),
+                label: label
+            };
+
+            unflatObj = flatten.unflatten(schemaObject);
+
+            if(unflatObj){
                 if(typeof SchemaPlain !== 'undefined')
-                    _.merge(SchemaPlain.user, schemaObject);
+                    _.merge(SchemaPlain.user, mergeObj);
 
                 Schema.user = new SimpleSchema(SchemaPlain.user);
                 Meteor.users.attachSchema(Schema.user);
 
                 var schema = SchemaCol.findOne({identifier: 'user'});
                 if(typeof schema !== 'undefined'){
-                    SchemaCol.update({identifier: 'user'},{ $set:{
-                        user: JSON.stringify(SchemaPlain.user)
+                    SchemaCol.update({identifier: 'user'},{ $addToSet:{
+                        user: unflatObj
                     }});
                 }else{
                     SchemaCol.insert({
-                        user: JSON.stringify(SchemaPlain.user),
+                        user: [unflatObj],
                         identifier: "user"
                     });
                 }
@@ -445,9 +461,12 @@ if (Meteor.isServer) {
         getUserSchema: function(){
             var schema = SchemaCol.findOne({identifier: 'user'});
             if(typeof schema !== 'undefined'){
-                return schema;
+                var flattenSchema = _.map(schema.user, function(obj){
+                    return flatten.flatten(obj);
+                });
+                return flattenSchema;
             }else{
-                return SchemaPlain.user;
+                return false;
             }
         },
         /*
