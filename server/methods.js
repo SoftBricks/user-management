@@ -405,35 +405,43 @@ if (Meteor.isServer) {
 
             return false;
         },
-
+        /*
+         * extends the user schema and updates the stored schema
+         * @param Object schemaObject
+         * @return Boolean
+         *      true = schema updated
+         *      false = schema not updated
+         */
         extendSchema: function(schemaObject){
 
-            var extendUserSchema = {
-                'profile.myNewField': {
-                    type: String,
-                    label: "bla",
-                    optional:false
+            if(schemaObject){
+                if(typeof SchemaPlain !== 'undefined')
+                    _.merge(SchemaPlain.user, schemaObject);
+
+                Schema.user = new SimpleSchema(SchemaPlain.user);
+                Meteor.users.attachSchema(Schema.user);
+
+                var schema = SchemaCol.findOne({identifier: 'user'});
+                if(typeof schema !== 'undefined'){
+                    SchemaCol.update({identifier: 'user'},{ $set:{
+                        user: JSON.stringify(SchemaPlain.user)
+                    }});
+                }else{
+                    SchemaCol.insert({
+                        user: JSON.stringify(SchemaPlain.user),
+                        identifier: "user"
+                    });
                 }
-            };
-
-            if(typeof SchemaPlain !== 'undefined')
-                _.merge(SchemaPlain.user, extendUserSchema);
-
-            Schema.user = new SimpleSchema(SchemaPlain.user);
-            Meteor.users.attachSchema(Schema.user);
-
-            var schema = SchemaCol.findOne({identifier: 'user'});
-            if(typeof schema !== 'undefined'){
-                SchemaCol.update({identifier: 'user'},{ $set:{
-                    user: JSON.stringify(SchemaPlain.user)
-                }});
             }else{
-                SchemaCol.insert({
-                    user: JSON.stringify(SchemaPlain.user),
-                    identifier: "user"
-                });
+                return false;
             }
+            return true
         },
+        /*
+         * returns the current user schema - if changed it returns from database
+         * @return Object
+         *      current User Schema
+         */
         getUserSchema: function(){
             var schema = SchemaCol.findOne({identifier: 'user'});
             if(typeof schema !== 'undefined'){
@@ -442,6 +450,12 @@ if (Meteor.isServer) {
                 return SchemaPlain.user;
             }
         },
+        /*
+         * Changes the current user schema -> removes a key and updates the database
+         * @return Boolean
+         *      true = updated schema
+         *      false = key to remove does not exists
+         */
         removeUserKey: function(key){
             var schema = SchemaCol.findOne({identifier: 'user'});
             var parsedSchema = JSON.parse(schema.user);
