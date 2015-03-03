@@ -2,6 +2,11 @@ Meteor.publish("users", function() {
     return publishUsers(this);
 });
 
+Meteor.publish("schema", function() {
+    return SchemaCol.find();
+});
+
+
 publishUsers = function(context) {
     if (context.userId) {
         var user = Meteor.users.findOne({

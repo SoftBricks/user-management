@@ -49,10 +49,11 @@ Package.onUse(function(api) {
   // client
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
+  api.addFiles(['lib/collections/schema.js'], 'server');
   //api.addFiles(['lib/umShowUsers.js'],'client');
   api.addFiles(['lib/templates/addUser.js','lib/router.js','lib/templates/editUser.js', 'lib/templates/userSearch.js'], 'client');
   api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
-  api.addFiles('lib/templates/schema.js', ['client', 'server']);
+  api.addFiles('lib/templates/schema.js', ['client','server']);
 
   api.addFiles(['lib/templates/userListItem.js']);
 
