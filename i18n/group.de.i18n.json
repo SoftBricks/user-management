@@ -8,5 +8,8 @@
   	"groupIds": "Gruppen Id's",
 
 	"groupDetail": "Gruppen Info",
-	"editGroup": "Gruppe Bearbeiten"
+	"editGroup": "Gruppe Bearbeiten",
+
+	"noGroupsYet": "Es gibt noch keine Gruppen. Klicken den Button unten um welche zu erstellen.",
+	"maybeNoGroupRights": "(Vielleicht fehlen dir die Rechte um Gruppen zu sehen)"
 }

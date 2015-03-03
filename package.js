@@ -35,6 +35,8 @@ Package.onUse(function(api) {
   api.imply('jparker:gravatar');
   api.use('simple:reactive-method@1.0.0');
   api.imply('simple:reactive-method');
+  api.use('meteorhacks:search-source@1.2.0');
+  api.imply('meteorhacks:search-source');
 
 
   // You must load your package's package-tap.i18n before you load any
@@ -45,11 +47,12 @@ Package.onUse(function(api) {
   api.addFiles('server/publications.js', 'server');
   api.addFiles('server/methods.js', 'server');
   api.addFiles('server/init.js', 'server');
+  api.addFiles('server/userSearch.js', 'server');
 
   // client
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
+  api.addFiles(['lib/userSearch.js'],'client');
   api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
-  //api.addFiles(['lib/umShowUsers.js'],'client');
   api.addFiles(['lib/templates/addUser.js','lib/router.js','lib/templates/editUser.js', 'lib/templates/userSearch.js'], 'client');
   api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
   api.addFiles('lib/templates/schema.js', ['client', 'server']);
@@ -68,6 +71,7 @@ Package.onUse(function(api) {
   api.export('SchemaPlain',['client','server']);
   api.export('checkRights',['server']);
   api.export('__', ['client','server']);
+  api.export('UserSearch', ['client', 'server']);
   
 });
 

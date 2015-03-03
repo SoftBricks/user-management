@@ -9,5 +9,8 @@
 	"user_status": "Account status",
 	"identifier": "Identifier",
 	"value": "Value",
-	"username": "Username"
+	"username": "Username",
+
+	"noUsersYet": "looks like there are no users yet... click the button below to create some",
+	"maybeNoUserRights": "(maybe you are missing the rights to see any)"
 }

@@ -9,5 +9,8 @@
 	"user_status": "Account Status",
 	"identifier": "Bezeichnung",
 	"value": "Wert",
-	"username": "Benutzername"
+	"username": "Benutzername",
+
+	"noUsersYet": "Es gibt noch keine Nutzer. Klicken den Button unten um welche zu erstellen.",
+	"maybeNoUserRights": "(Vielleicht fehlen dir die Rechte um Nutzer zu sehen)"
 }
