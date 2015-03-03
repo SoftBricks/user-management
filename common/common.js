@@ -1,7 +1,7 @@
+var Collections = {};
 SchemaPlain = {};
 SimpleSchema.debug = true;
 Schemas = {};
-Meteor.isClient && Template.registerHelper("Schemas", Schemas);
 
 SchemaPlain.schema = {
     user: {
@@ -160,7 +160,28 @@ SchemaPlain.user = {
 Schemas.schema = new SimpleSchema(SchemaPlain.schema);
 Schemas.users = new SimpleSchema(SchemaPlain.user);
 
-//Meteor.startup(function(){
-//
-//});
+SchemaCol = Collections.SchemaCol = new Mongo.Collection('schema');
 
+SchemaCol.attachSchema(Schemas.schema);
+Collections.Users = Meteor.users;
+
+Meteor.startup(function(){
+    var schema = SchemaCol.findOne({identifier: 'user'});
+
+    if (typeof schema !== 'undefined') {
+        _.each(schema.user, function (schemaObj) {
+            console.log("calling merge");
+            Meteor.call('flattenObject', schemaObj, function (err, res) {
+                Meteor.call('mergeObjectInSchema', res);
+            });
+        });
+    } else {
+        console.log("undefined");
+        Meteor.users.attachSchema(Schemas.users);
+    }
+
+    if(Meteor.isClient){
+        console.log("schema");
+        console.log(schema);
+    }
+});

@@ -509,15 +509,16 @@ if (Meteor.isServer) {
             console.log(mySchemaObj);
             if(Object.getOwnPropertyNames(mySchemaObj).length > 0){
                 _.merge(SchemaPlain.user, mySchemaObj);
-                Meteor.users.attachSchema(new SimpleSchema(SchemaPlain.user));
+                Schemas.users = new SimpleSchema(SchemaPlain.user)
+                Meteor.users.attachSchema(Schemas.users);
             }
         },
 
         flattenObject: function (flatMe){
             return flatten.flatten(flatMe);
         },
-        //getCollection2UserSchema: function(){
-        //    return Schema.user;
-        //}
+        getCollection2UserSchema: function(){
+            return Schemas.users;
+        }
     });
 }
