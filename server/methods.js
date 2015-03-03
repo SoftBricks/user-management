@@ -414,12 +414,11 @@ if (Meteor.isServer) {
          *      false = schema not updated
          */
         extendSchema: function(type, label, key){
-            schemaObject = {
-            };
 
-            schemaObject[key] = {
+            schemaObject = {
                 type: type,
-                label: label
+                label: label,
+                key: key
             };
 
             mergeObj = {};
@@ -428,23 +427,20 @@ if (Meteor.isServer) {
                 label: label
             };
 
-            unflatObj = flatten.unflatten(schemaObject);
+            //unflatObj = flatten.unflatten(schemaObject);
 
-            if(unflatObj){
-                if(typeof SchemaPlain !== 'undefined')
-                    _.merge(SchemaPlain.user, mergeObj);
+            if(schemaObject){
 
-                Schema.user = new SimpleSchema(SchemaPlain.user);
-                Meteor.users.attachSchema(Schema.user);
+                Meteor.call('mergeObjectInSchema', schemaObject);
 
                 var schema = SchemaCol.findOne({identifier: 'user'});
                 if(typeof schema !== 'undefined'){
                     SchemaCol.update({identifier: 'user'},{ $addToSet:{
-                        user: unflatObj
+                        user: schemaObject
                     }});
                 }else{
                     SchemaCol.insert({
-                        user: [unflatObj],
+                        user: [schemaObject],
                         identifier: "user"
                     });
                 }
@@ -477,17 +473,52 @@ if (Meteor.isServer) {
          */
         removeUserKey: function(key){
             var schema = SchemaCol.findOne({identifier: 'user'});
-            var parsedSchema = JSON.parse(schema.user);
-            var res = _.has(parsedSchema, key);
-            if(res === true){
-                delete parsedSchema[key];
-                SchemaCol.update({identifier: 'user'},{ $set:{
-                    user: JSON.stringify(parsedSchema)
+            var flattenSchema = {};
+            var removeObj = {};
+            flattenSchema = _.map(schema.user, function(obj){
+                var flat =  flatten.flatten(obj);
+                if(!_.has(flat, key+'.type')){
+                    return flat
+                }else{
+                    removeObj = obj;
+                }
+
+
+            });
+            if(Object.getOwnPropertyNames(removeObj).length > 0){
+                SchemaCol.update({identifier: 'user'},{ $pull:{
+                    user: flatten.unflatten(removeObj)
                 }});
-            }else {
+                return true;
+            }else{
                 return false;
             }
-            return true;
+        },
+
+        mergeObjectInSchema: function(mergeObj){
+            console.log("merging");
+            console.log(mergeObj);
+
+            var mySchemaObj = {};
+
+            mySchemaObj[mergeObj.key] = {
+                    type: eval(mergeObj.type),
+                    label: mergeObj.label
+            };
+
+            console.log(mySchemaObj);
+            if(Object.getOwnPropertyNames(mySchemaObj).length > 0){
+                _.merge(SchemaPlain.user, mySchemaObj);
+                Schemas.users = new SimpleSchema(SchemaPlain.user)
+                Meteor.users.attachSchema(Schemas.users);
+            }
+        },
+
+        flattenObject: function (flatMe){
+            return flatten.flatten(flatMe);
+        },
+        getCollection2UserSchema: function(){
+            return Schemas.users;
         }
     });
 }

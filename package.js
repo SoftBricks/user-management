@@ -49,13 +49,14 @@ Package.onUse(function(api) {
   api.addFiles('server/init.js', 'server');
   api.addFiles('server/userSearch.js', 'server');
 
+  api.addFiles('common/common.js', ['client','server']);
   // client
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/userSearch.js'],'client');
   api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
   api.addFiles(['lib/templates/addUser.js','lib/router.js','lib/templates/editUser.js', 'lib/templates/userSearch.js'], 'client');
   api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
-  api.addFiles('lib/templates/schema.js', ['client', 'server']);
+
 
   api.addFiles(['lib/templates/userListItem.js']);
 
@@ -66,7 +67,7 @@ Package.onUse(function(api) {
   api.addFiles(['i18n/actions.de.i18n.json', 'i18n/actions.en.i18n.json'], ['client', 'server']);
 
   api.export('UserManagementTemplates', ['client', 'server']);
-  api.export('Schema',['client','server']);
+  api.export('Schemas',['client','server']);
   api.export('UM',['client','server']);
   api.export('SchemaPlain',['client','server']);
   api.export('checkRights',['server']);

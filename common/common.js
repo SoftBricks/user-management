@@ -1,9 +1,7 @@
-Schema = {};
+var Collections = {};
 SchemaPlain = {};
 SimpleSchema.debug = true;
-
-
-SchemaCol = new Mongo.Collection('schema');
+Schemas = {};
 
 SchemaPlain.schema = {
     user: {
@@ -166,21 +164,29 @@ SchemaPlain.user = {
     }
 };
 
+Schemas.schema = new SimpleSchema(SchemaPlain.schema);
+Schemas.users = new SimpleSchema(SchemaPlain.user);
 
-Meteor.startup(function() {
-    Schema.schemaCol = new SimpleSchema(SchemaPlain.schema);
-    SchemaCol.attachSchema(Schema.schemaCol);
 
-    Schema.user = new SimpleSchema(SchemaPlain.user);
+SchemaCol = Collections.SchemaCol = new Mongo.Collection('schema');
 
-    var schemaUser = SchemaCol.findOne({
-        identifier: 'user'
-    });
+SchemaCol.attachSchema(Schemas.schema);
+Collections.Users = Meteor.users;
+
+
+Meteor.startup(function(){
+    var schema = SchemaCol.findOne({identifier: 'user'});
+
     if (typeof schema !== 'undefined') {
-        Meteor.users.attachSchema(JSON.parse(schemaUser.user));
+        _.each(schema.user, function (schemaObj) {
+            console.log("calling merge");
+            Meteor.call('flattenObject', schemaObj, function (err, res) {
+                Meteor.call('mergeObjectInSchema', res);
+            });
+        });
     } else {
-        Meteor.users.attachSchema(Schema.user);
+        console.log("undefined");
+        Meteor.users.attachSchema(Schemas.users);
     }
-
 
 });
