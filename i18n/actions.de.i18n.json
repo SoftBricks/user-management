@@ -9,5 +9,7 @@
 	"removeGroupInfo": "Alle Informationen über diese Gruppe werden unwiederruflich entfernt!",
 
 	"editSuccess": "%s wurde erfolgreich bearbeitet",
-	"createSuccess": "%s wurde erfolgreich erstellt"
+	"createSuccess": "%s wurde erfolgreich erstellt",
+
+	"searchResults": "Suchergebnisse"
 }

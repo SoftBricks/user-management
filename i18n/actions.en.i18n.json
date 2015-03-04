@@ -9,5 +9,7 @@
 	"removeGroupInfo": "All information about this group will be deleted permanently",
 
 	"editSuccess": "%s was edited successfully",
-	"createSuccess": "%s was created successfully"
+	"createSuccess": "%s was created successfully",
+
+	"searchResults": "Search results"
 }

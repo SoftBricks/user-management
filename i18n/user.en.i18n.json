@@ -1,6 +1,7 @@
 {
 	"user": "User",
 	"users": "Users",
+	"allUsers": "All Users",
 	"additionalFields": "Additional Fields",
 	"emailAddress": "Email address",
 	"editUser": "Edit User",

@@ -18,6 +18,8 @@ Meteor.methods({
                     'profile.fullname': regExp
                 }]
             };
+        }else{
+            return [];
         }
         var res = publishUsers(this, selector, options);
         if(!res){
