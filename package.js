@@ -22,6 +22,8 @@ Package.onUse(function(api) {
   api.imply('aldeed:simple-schema');
   api.use(['aldeed:collection2@2.3.2']);
   api.imply('aldeed:collection2');
+  api.use('ongoworks:security@1.0.1');
+  api.imply('ongoworks:security@1.0.1');
   api.use('tap:i18n@1.4.0', ['client', 'server']);
   api.use('softwarerero:accounts-t9n@1.0.6', ['client', 'server']);
 
@@ -37,6 +39,8 @@ Package.onUse(function(api) {
   api.imply('simple:reactive-method');
   api.use('meteorhacks:search-source@1.2.0');
   api.imply('meteorhacks:search-source');
+  api.use('alanning:roles@1.2.12');
+  api.imply('alanning:roles');
 
 
   // You must load your package's package-tap.i18n before you load any
@@ -48,6 +52,8 @@ Package.onUse(function(api) {
   api.addFiles('server/methods.js', 'server');
   api.addFiles('server/init.js', 'server');
   api.addFiles('server/userSearch.js', 'server');
+  api.addFiles('server/rules.js', ['server']);
+  api.addFiles('server/security.js', ['server']);
 
   api.addFiles('lib/common/common.js', ['client','server']);
   api.addFiles('lib/utils.js', ['client','server']);

@@ -15,7 +15,7 @@ publishUsers = function(context, selector, options) {
         var user = Meteor.users.findOne({
             _id: context.userId
         });
-        if (user.profile.admin === true || user.profile.superAdmin === true) {
+        if (Roles.userIsInRole(context.userId, 'admin')) {
             return Meteor.users.find(selector, options);
         } else {
             return Meteor.users.find(_.extend({

@@ -11,41 +11,41 @@ if (Meteor.isServer) {
      *      error = user is not allowed to do the action
      */
     checkRights = {
-        'checkUserRight': function (userId, currentUserId) {
-            if (typeof userId !== 'undefined' && typeof currentUserId !== 'undefined' && currentUserId === userId)
-                return true;
+        // 'checkUserRight': function (userId, currentUserId) {
+        //     if (typeof userId !== 'undefined' && typeof currentUserId !== 'undefined' && currentUserId === userId)
+        //         return true;
 
-            if (typeof currentUserId !== 'undefined') {
-                var admin = Meteor.users.findOne({_id: currentUserId}, {
-                    _id: 0,
-                    createdAt: 0,
-                    emails: 0,
-                    services: 0,
-                    username: 0
-                });
-                if (admin) {
-                    if (admin.profile && (admin.profile.superAdmin || admin.profile.admin))
-                        return true;
-                }
-            }
+        //     if (typeof currentUserId !== 'undefined') {
+        //         var admin = Meteor.users.findOne({_id: currentUserId}, {
+        //             _id: 0,
+        //             createdAt: 0,
+        //             emails: 0,
+        //             services: 0,
+        //             username: 0
+        //         });
+        //         if (admin) {
+        //             if (admin.profile && (admin.profile.superAdmin || admin.profile.admin))
+        //                 return true;
+        //         }
+        //     }
 
-            throw new Meteor.Error("checkUserRight", "You have no right to do this!!");
+        //     throw new Meteor.Error("checkUserRight", "You have no right to do this!!");
 
-        },
-        'makeAndRemoveAdmin': function (userId, currentUserId, userObject) {
-            if(typeof userObject !== 'undefined')
-                var userObject = Meteor.users.findOne({_id: currentUserId});
-            if (typeof userObject !== 'undefined') {
-                if (currentUserId == userId && userObject.profile.superAdmin == false && userObject.profile.admin == false) {
-                    return false;
-                }
-                if ((userObject.profile.superAdmin == true || userObject.profile.admin == true) && currentUserId !== userId) {
-                    return true;
-                }
-            }
+        // },
+        // 'makeAndRemoveAdmin': function (userId, currentUserId, userObject) {
+        //     if(typeof userObject !== 'undefined')
+        //         var userObject = Meteor.users.findOne({_id: currentUserId});
+        //     if (typeof userObject !== 'undefined') {
+        //         if (currentUserId == userId && userObject.profile.superAdmin == false && userObject.profile.admin == false) {
+        //             return false;
+        //         }
+        //         if ((userObject.profile.superAdmin == true || userObject.profile.admin == true) && currentUserId !== userId) {
+        //             return true;
+        //         }
+        //     }
 
-            return false;
-        }
+        //     return false;
+        // }
     };
 
 
@@ -84,20 +84,20 @@ if (Meteor.isServer) {
          *      true = share asset with group successfull
          *      error = share asset with group failed
          */
-        shareAssetWithGroup: function (assetId, groupId) {
-            if (assetId && groupId) {
-                AssetFiles.update({
-                    _id: assetId
-                }, {
-                    $addToSet: {sharedWithGroups: groupId}
-                });
-            } else {
-                if (assetId === "")
-                    throw new Meteor.error("asset", "Asset id was not specified!");
-                if (groupId === "")
-                    throw new Meteor.Error("asset", "Group id was not specified");
-            }
-        },
+        // shareAssetWithGroup: function (assetId, groupId) {
+        //     if (assetId && groupId) {
+        //         AssetFiles.update({
+        //             _id: assetId
+        //         }, {
+        //             $addToSet: {sharedWithGroups: groupId}
+        //         });
+        //     } else {
+        //         if (assetId === "")
+        //             throw new Meteor.error("asset", "Asset id was not specified!");
+        //         if (groupId === "")
+        //             throw new Meteor.Error("asset", "Group id was not specified");
+        //     }
+        // },
         /*
          * shares a folder with a group
          * @param String folderId
@@ -106,22 +106,22 @@ if (Meteor.isServer) {
          *      true = share folder with group successfull
          *      error = share folder with group failed
          */
-        shareFolderWithGroup: function (folderId, groupId) {
-            if (folderId && groupId) {
-                Folders.update({
-                    _id: folderId
-                }, {
-                    $addToSet: {
-                        sharedWithGroups: groupId
-                    }
-                });
-            } else {
-                if (folderId === "")
-                    throw new Meteor.error("folder", "Folder id was not specified!");
-                if (groupId === "")
-                    throw new Meteor.Error("folder", "Group id was not specified");
-            }
-        },
+        // shareFolderWithGroup: function (folderId, groupId) {
+        //     if (folderId && groupId) {
+        //         Folders.update({
+        //             _id: folderId
+        //         }, {
+        //             $addToSet: {
+        //                 sharedWithGroups: groupId
+        //             }
+        //         });
+        //     } else {
+        //         if (folderId === "")
+        //             throw new Meteor.error("folder", "Folder id was not specified!");
+        //         if (groupId === "")
+        //             throw new Meteor.Error("folder", "Group id was not specified");
+        //     }
+        // },
         /*
          * creates a user
          * @param Object doc
@@ -131,10 +131,10 @@ if (Meteor.isServer) {
          */
         createUserWithoutPassword: function (doc) {
             // Important server-side check for security and data integrity
-            if (checkRights.checkUserRight("", Meteor.userId())) {
+            if (Roles.userIsInRole(Meteor.userId(), ['admin', 'superAdmin'])) {
                 var user = {
                     'username': doc.username,
-                    'email': doc.emails[0].addresses,
+                    'email': doc.emails[0].address,
                     'profile': doc.profile
                 };
                 user = Accounts.createUser(user);
@@ -155,7 +155,7 @@ if (Meteor.isServer) {
          */
         removeUser: function (userId) {
             if (userId !== Meteor.userId()) {
-                if (checkRights.checkUserRight(userId, Meteor.userId())) {
+                if (Roles.userIsInRole(Meteor.userId(), ['admin', 'superAdmin'])) {
                     if (userId) {
                         var userToRemove = Meteor.users.findOne({_id: userId}, {
                             _id: 0,
@@ -164,7 +164,7 @@ if (Meteor.isServer) {
                             services: 0,
                             username: 0
                         });
-                        if (userToRemove && userToRemove.profile.superAdmin === false) {
+                        if (userToRemove && Roles.userIsInRole(userId, 'superAdmin') === false) {
 
                             var success = Meteor.users.remove({
                                 _id: userId
@@ -268,24 +268,24 @@ if (Meteor.isServer) {
          *      true = set admin rights successfull
          *      error = set admin rights failed
          */
-        promoteUserToAdmin: function (userId) {
-            if (checkRights.checkUserRight(userId, Meteor.userId())) {
-                var user = Meteor.users.update({
-                        _id: doc.userId
-                    }, {
-                        $set: {
-                            'profile.admin': true
-                        }
-                    }
-                );
-                if (user != 1)
-                    throw new Meteor.Error("user", "Promote user to admin failed");
+        // promoteUserToAdmin: function (userId) {
+        //     if (checkRights.checkUserRight(userId, Meteor.userId())) {
+        //         var user = Meteor.users.update({
+        //                 _id: doc.userId
+        //             }, {
+        //                 $set: {
+        //                     'profile.admin': true
+        //                 }
+        //             }
+        //         );
+        //         if (user != 1)
+        //             throw new Meteor.Error("user", "Promote user to admin failed");
 
-                return true;
-            } else {
-                throw new Meteor.Error("user", "You have no rights to promote this user to admin");
-            }
-        },
+        //         return true;
+        //     } else {
+        //         throw new Meteor.Error("user", "You have no rights to promote this user to admin");
+        //     }
+        // },
         /*
          * removes admin rights from a user
          * @param String userId
@@ -293,75 +293,24 @@ if (Meteor.isServer) {
          *      true = admin rights remove successfull
          *      error = admin rights remove failed
          */
-        degradeUserFromAdmin: function (userId) {
-            if (checkRights.checkUserRight(userId, Meteor.userId())) {
-                var user = Meteor.users.update({
-                        _id: doc.userId
-                    }, {
-                        $set: {
-                            'profile.admin': false
-                        }
-                    }
-                );
-                if (user != 1)
-                    throw new Meteor.Error("user", "Degrading of user failed");
+        // degradeUserFromAdmin: function (userId) {
+        //     if (checkRights.checkUserRight(userId, Meteor.userId())) {
+        //         var user = Meteor.users.update({
+        //                 _id: doc.userId
+        //             }, {
+        //                 $set: {
+        //                     'profile.admin': false
+        //                 }
+        //             }
+        //         );
+        //         if (user != 1)
+        //             throw new Meteor.Error("user", "Degrading of user failed");
 
-                return true;
-            } else {
-                throw new Meteor.Error("user", "You have no rights to degrade this user");
-            }
-        },
-        /*
-         * activates a user
-         * @param String userId
-         * @return Boolean
-         *      true = activation successfull
-         *      error = activation failed
-         */
-        activateUser: function (userId) {
-            if (checkRights.checkUserRight(userId, Meteor.userId())) {
-                var user = Meteor.users.update({
-                        _id: userId
-                    }, {
-                        $set: {
-                            'profile.activated': true
-                        }
-                    }
-                );
-
-                if (user != 1)
-                    throw new Meteor.Error("user", "User activation failed");
-
-                return true;
-            } else {
-                throw new Meteor.Error("user", "You have no rights to activate this user");
-            }
-        },
-        /*
-         * deactivates a user
-         * @param String userId
-         * @return Boolean
-         *      true = deactivation successfull
-         *      error = deactivation failed
-         */
-        deactivateUser: function (userId) {
-            if (checkRights.checkUserRight(userId, Meteor.userId())) {
-                var user = Meteor.users.update({
-                        _id: userId
-                    }, {
-                        $set: {
-                            'profile.activated': false
-                        }
-                    }
-                );
-                if (user != 1)
-                    throw new Meteor.Error("user", "User deactivation failed");
-
-                return true;
-            } else {
-                throw new Meteor.Error("user", "You have no rights to activate this user");
-            }
-        },
+        //         return true;
+        //     } else {
+        //         throw new Meteor.Error("user", "You have no rights to degrade this user");
+        //     }
+        // },
         /*
          * checks if a given username is already existing in the database
          * @param String username
