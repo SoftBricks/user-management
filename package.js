@@ -49,7 +49,7 @@ Package.onUse(function(api) {
   api.addFiles('server/init.js', 'server');
   api.addFiles('server/userSearch.js', 'server');
 
-  api.addFiles('common/common.js', ['client','server']);
+  api.addFiles('lib/common/common.js', ['client','server']);
   // client
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/userSearch.js'],'client');
@@ -73,6 +73,7 @@ Package.onUse(function(api) {
   api.export('checkRights',['server']);
   api.export('__', ['client','server']);
   api.export('UserSearch', ['client', 'server']);
+  api.export('SchemaCol',['client','server']);
   
 });
 
