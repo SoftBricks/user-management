@@ -421,33 +421,33 @@ if (Meteor.isServer) {
                 key: key
             };
 
-            mergeObj = {};
-            mergeObj[key] = {
-                type: eval(type),
-                label: label
-            };
+            // mergeObj = {};
+            // mergeObj[key] = {
+            //     type: eval(type),
+            //     label: label
+            // };
 
             //unflatObj = flatten.unflatten(schemaObject);
 
             if(schemaObject){
 
-                Meteor.call('mergeObjectInSchema', schemaObject);
+                // Meteor.call('mergeObjectInSchema', schemaObject);
 
                 var schema = SchemaCol.findOne({identifier: 'user'});
                 if(typeof schema !== 'undefined'){
                     SchemaCol.update({identifier: 'user'},{ $addToSet:{
-                        user: schemaObject
+                        fields: schemaObject
                     }});
                 }else{
                     SchemaCol.insert({
-                        user: [schemaObject],
+                        fields: [schemaObject],
                         identifier: "user"
                     });
                 }
             }else{
                 return false;
             }
-            return true
+            return true;
         },
         /*
          * returns the current user schema - if changed it returns from database

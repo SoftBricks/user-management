@@ -50,6 +50,7 @@ Package.onUse(function(api) {
   api.addFiles('server/userSearch.js', 'server');
 
   api.addFiles('lib/common/common.js', ['client','server']);
+  api.addFiles('lib/utils.js', ['client','server']);
   // client
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/userSearch.js'],'client');
@@ -74,6 +75,7 @@ Package.onUse(function(api) {
   api.export('__', ['client','server']);
   api.export('UserSearch', ['client', 'server']);
   api.export('SchemaCol',['client','server']);
+  api.export('UserSchema',['client','server']);
   
 });
 
