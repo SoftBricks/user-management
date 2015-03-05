@@ -1,13 +1,13 @@
-Meteor.publish("users", function() {
+Meteor.publish("users", function () {
     var res = publishUsers(this);
     if (!res) {
         this.ready();
-    }else{
+    } else {
         return res;
     }
 });
 
-publishUsers = function(context, selector, options) {
+publishUsers = function (context, selector, options) {
     selector = selector || {};
     options = options || {};
 
@@ -25,6 +25,12 @@ publishUsers = function(context, selector, options) {
     }
 };
 
-Meteor.publish("schema", function() {
+Meteor.publish("schema", function () {
     return SchemaCol.find();
+});
+
+Meteor.publish("roles", function () {
+    if (Roles.userIsInRole(this.userId, 'admin') || Roles.userIsInRole(this.userId, 'superAdmin')) {
+        return Meteor.roles.find();
+    }
 });

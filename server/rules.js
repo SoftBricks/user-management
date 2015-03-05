@@ -60,3 +60,21 @@ Security.defineMethod("ifDoesNotEffectSuperAdminExceptHimself", {
     }
 });
 
+//Security.defineMethod("ifDoesChangeSuperAdminRole", {
+//    fetch: [],
+//    deny: function (type, arg, userId, doc, fields, modifier) {
+//        if(typeof modifier !== 'undefined'){
+//            console.log(modifier);
+//            console.log("modifier");
+//            if(_.includes(modifier, 'superAdmin'))
+//                return true;
+//            console.log("false");
+//            return false;
+//        }else{
+//            if(_.includes(doc, 'superAdmin'))
+//                return true;
+//            return false;
+//        }
+//    }
+//});
+

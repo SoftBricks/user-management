@@ -31,8 +31,10 @@ Package.onUse(function(api) {
 
   api.use('alethes:pages@1.8.4');
   api.imply('alethes:pages');
-  api.use('stevezhu:lodash@1.0.2');
-  api.imply('stevezhu:lodash');
+  //api.use('stevezhu:lodash@1.0.2');
+  //api.imply('stevezhu:lodash');
+  api.use('erasaur:meteor-lodash@3.3.0');
+  api.imply('erasaur:meteor-lodash');
   api.use('jparker:gravatar@0.3.1');
   api.imply('jparker:gravatar');
   api.use('simple:reactive-method@1.0.0');
