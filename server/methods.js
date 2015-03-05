@@ -49,7 +49,7 @@ if (Meteor.isServer) {
     };
 
 
-    /*
+    /**
      * Generates a random password
      * @return String
      *      password with length 10
@@ -122,7 +122,7 @@ if (Meteor.isServer) {
         //             throw new Meteor.Error("folder", "Group id was not specified");
         //     }
         // },
-        /*
+        /**
          * creates a user
          * @param Object doc
          * @return Boolean
@@ -139,6 +139,7 @@ if (Meteor.isServer) {
                 };
                 user = Accounts.createUser(user);
                 if (user) {
+                    Roles.addUsersToRoles(user, 'user');
                     Accounts.sendEnrollmentEmail(user);
                     return true;
                 }
@@ -146,7 +147,7 @@ if (Meteor.isServer) {
                     throw new Meteor.Error("user", "User has not been created");
             }
         },
-        /*
+        /**
          * removes a user
          * @param String userId
          * @return Boolean
@@ -325,7 +326,7 @@ if (Meteor.isServer) {
 
             return false;
         },
-        /*
+        /**
          * checks if a given email is already existing in the database
          * @param String email
          * @return Boolean

@@ -24,10 +24,35 @@
 // 	}
 // });
 
-Security.defineMethod("ifIsCurrentUserAndAdmin", {
+Security.defineMethod("ifIsCurrentUser", {
 	fetch: [],
 	deny: function(type, arg, userId, doc) {
-		console.log(userId, doc._id);
 		return doc._id !== userId;
 	}
 });
+
+Security.defineMethod("ifIsNotCurrentUser", {
+	fetch: [],
+	deny: function(type, arg, userId, doc) {
+		return doc._id === userId;
+	}
+});
+
+Security.defineMethod("ifDoesNotEffectSuperAdmin", {
+	fetch: [],
+	deny: function(type, arg, userId, doc) {
+		return Roles.userIsInRole(doc._id, 'superAdmin');
+	}
+});
+
+Security.defineMethod("ifDoesNotEffectSuperAdminExceptHimself", {
+	fetch: [],
+	deny: function(type, arg, userId, doc) {
+		if(Roles.userIsInRole(doc._id, 'superAdmin')){
+			if(doc._id === userId)
+				return false;
+		}
+		return true;
+	}
+});
+
