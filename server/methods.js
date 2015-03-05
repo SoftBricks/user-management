@@ -208,6 +208,7 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("user", "You are not allowed to delete yourself");
             }
         },
+
         /*
          * updates user information
          * @param Object doc
