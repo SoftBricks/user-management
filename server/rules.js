@@ -24,6 +24,23 @@
 // 	}
 // });
 
+var pickDeep = function (obj, key) {
+    if (_.has(obj, key)) // or just (key in obj)
+        return [obj];
+    // elegant:
+    return _.flatten(_.map(obj, function(v) {
+        return typeof v == "object" ? pickDeep(v, key) : [];
+    }), true);
+
+    // or efficient:
+    var res = [];
+    _.forEach(obj, function(v) {
+        if (typeof v == "object" && (v = pickDeep(v, key)).length)
+            res.push.apply(res, v);
+    });
+    return res;
+}
+
 Security.defineMethod("ifIsCurrentUser", {
     fetch: [],
     deny: function (type, arg, userId, doc) {
@@ -60,21 +77,31 @@ Security.defineMethod("ifDoesNotEffectSuperAdminExceptHimself", {
     }
 });
 
-//Security.defineMethod("ifDoesChangeSuperAdminRole", {
-//    fetch: [],
-//    deny: function (type, arg, userId, doc, fields, modifier) {
-//        if(typeof modifier !== 'undefined'){
-//            console.log(modifier);
-//            console.log("modifier");
-//            if(_.includes(modifier, 'superAdmin'))
-//                return true;
-//            console.log("false");
-//            return false;
-//        }else{
-//            if(_.includes(doc, 'superAdmin'))
-//                return true;
-//            return false;
-//        }
-//    }
-//});
+Security.defineMethod("ifDoesChangeSuperAdminRole", {
+    fetch: [],
+    deny: function (type, arg, userId, doc, fields, modifier) {
+        if(typeof modifier !== 'undefined'){
+
+            var roles = pickDeep(modifier, 'roles');
+            console.log(roles[0].roles);
+
+            if(_.includes(roles[0].roles, 'superAdmin')){
+                //Should always be shown
+                console.log("NOT ALLOWED to change superAdmin Role");
+                return true;
+            }else if(_.includes(roles[0].roles['$each'], 'superAdmin')){
+                //Should always be shown
+                console.log("NOT ALLOWED to change superAdmin Role");
+                return true;
+            }
+            //Should never happen :D
+            console.log("allowed to change superAdmin Role");
+            return false;
+        }else{
+            if(_.includes(doc, 'superAdmin'))
+                return true;
+            return false;
+        }
+    }
+});
 
