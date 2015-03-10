@@ -60,16 +60,12 @@ Security.defineMethod("ifDoesChangeSuperAdminRole", {
             console.log(roles[0].roles);
 
             if(_.includes(roles[0].roles, 'superAdmin')){
-                //Should always be shown
                 console.log("NOT ALLOWED to change superAdmin Role");
                 return true;
             }else if(_.includes(roles[0].roles['$each'], 'superAdmin')){
-                //Should always be shown
                 console.log("NOT ALLOWED to change superAdmin Role");
                 return true;
             }
-            //Should never happen :D
-            console.log("allowed to change superAdmin Role");
             return false;
         }
         return true;
