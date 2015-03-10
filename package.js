@@ -92,7 +92,3 @@ Package.onTest(function(api) {
   api.use('softbricks:user-management');
   api.addFiles('softbricks:user-management-tests.js');
 });
-
-Npm.depends({
-  "flat": "1.5.0"
-});

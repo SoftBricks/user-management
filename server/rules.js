@@ -1,29 +1,3 @@
-// Security.defineMethod("ifIsAdmin", {
-// 	fetch: [],
-// 	deny: function(type, arg, userId) {
-// 		var admin = Meteor.users.findOne({
-// 			_id: userId
-// 		});
-// 		if (admin && admin.superAdmin || admin.admin) {
-// 			return false;
-// 		}
-// 		return true;
-// 	}
-// });
-
-// Security.defineMethod("ifIsSuperAdmin", {
-// 	fetch: [],
-// 	deny: function(type, arg, userId) {
-// 		var admin = Meteor.users.findOne({
-// 			_id: userId
-// 		});
-// 		if (admin && admin.superAdmin) {
-// 			return false;
-// 		}
-// 		return true;
-// 	}
-// });
-
 var pickDeep = function (obj, key) {
     if (_.has(obj, key)) // or just (key in obj)
         return [obj];
@@ -97,11 +71,8 @@ Security.defineMethod("ifDoesChangeSuperAdminRole", {
             //Should never happen :D
             console.log("allowed to change superAdmin Role");
             return false;
-        }else{
-            if(_.includes(doc, 'superAdmin'))
-                return true;
-            return false;
         }
+        return true;
     }
 });
 
