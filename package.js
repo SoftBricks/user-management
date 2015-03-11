@@ -23,7 +23,7 @@ Package.onUse(function(api) {
   api.use(['aldeed:collection2@2.3.2']);
   api.imply('aldeed:collection2');
   api.use('ongoworks:security@1.0.1');
-  api.imply('ongoworks:security@1.0.1');
+  api.imply('ongoworks:security');
   api.use('tap:i18n@1.4.0', ['client', 'server']);
   api.use('softwarerero:accounts-t9n@1.0.6', ['client', 'server']);
 
@@ -48,6 +48,8 @@ Package.onUse(function(api) {
   api.add_files("package-tap.i18n", ["client", "server"]);
 
   // server
+  api.addFiles('lib/utils.js', ['client','server']);
+  api.addFiles('lib/common/common.js', ['client','server']);
   api.addFiles('server/publications.js', 'server');
   api.addFiles('server/methods.js', 'server');
   api.addFiles('server/init.js', 'server');
@@ -55,8 +57,7 @@ Package.onUse(function(api) {
   api.addFiles('server/rules.js', ['server']);
   api.addFiles('server/security.js', ['server']);
 
-  api.addFiles('lib/common/common.js', ['client','server']);
-  api.addFiles('lib/utils.js', ['client','server']);
+
   // client
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/userSearch.js'],'client');
@@ -81,7 +82,7 @@ Package.onUse(function(api) {
   api.export('__', ['client','server']);
   api.export('UserSearch', ['client', 'server']);
   api.export('SchemaCol',['client','server']);
-  api.export('UserSchema',['client','server']);
+  api.export('SchemaManager',['client','server']);
   
 });
 
