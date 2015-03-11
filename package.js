@@ -70,6 +70,7 @@ Package.onUse(function(api) {
 
   // i18n files
   api.addFiles(['i18n/user.de.i18n.json', 'i18n/user.en.i18n.json'], ['client', 'server']);
+  api.addFiles(['i18n/role.de.i18n.json', 'i18n/role.en.i18n.json'], ['client', 'server']);
   api.addFiles(['i18n/group.de.i18n.json', 'i18n/group.en.i18n.json'], ['client', 'server']);
   api.addFiles(['i18n/errors.de.i18n.json', 'i18n/errors.en.i18n.json'], ['client', 'server']);
   api.addFiles(['i18n/actions.de.i18n.json', 'i18n/actions.en.i18n.json'], ['client', 'server']);

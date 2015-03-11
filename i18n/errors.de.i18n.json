@@ -1,7 +1,7 @@
 {
 	"isEmpty": "Bitte %s eingeben",
 	"schema-required": "[label] wird benötigt",
-	"alreadyExisting": "existiert bereits",
+	"alreadyExisting": "%s existiert bereits",
 	"emailInvalid": "Bitte eine gültige Email Addresse eingeben",
 
 	"schema-required": "[label] ist ein Pflichtfeld",

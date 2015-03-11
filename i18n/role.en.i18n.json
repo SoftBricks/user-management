@@ -1,0 +1,11 @@
+{
+	"role": "Role",
+	"roles": "Roles",
+	"allRoles": "All Roles",
+	"editRole": "Edit Role",
+	"roleInfo": "Role Info",
+	"rolename": "Rolename",
+
+	"noRolesYet": "looks like there are no roles yet... click the button below to create some",
+	"maybeNoRoleRights": "(maybe you are missing the rights to see any)"
+}

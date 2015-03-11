@@ -1,0 +1,10 @@
+{
+	"role": "Rolle",
+	"roles": "Rollen",
+	"allRoles": "Alle Rollen",
+	"editRole": "Rolle Bearbeiten",
+	"roleInfo": "Rollen Info",
+	"rolename": "Rollenname",
+
+	"noRolesYet": "Es gibt noch keine Rollen. Klicken den Button unten um welche zu erstellen."
+}
