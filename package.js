@@ -87,8 +87,8 @@ Package.onUse(function(api) {
   
 });
 
-Package.onTest(function(api) {
-  api.use('tinytest');
-  api.use('softbricks:user-management');
-  api.addFiles('softbricks:user-management-tests.js');
-});
+//Package.onTest(function(api) {
+//  api.use('tinytest');
+//  api.use('softbricks:user-management');
+//  api.addFiles('softbricks:user-management-tests.js');
+//});

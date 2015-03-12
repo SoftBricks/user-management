@@ -1,14 +1,4 @@
 if (Meteor.isServer) {
-
-    /*
-     * checks the user rights to be allowed to to do special stuff
-     * e.g. removing users, promote them to admins...
-     * @param String userId
-     * @param String currentUserId
-     * @return Boolean
-     *      true = user is allowed to do the action
-     *      error = user is not allowed to do the action
-     */
     checkRights = {};
 
 
@@ -40,11 +30,10 @@ if (Meteor.isServer) {
 
     Meteor.methods({
         /**
-         * creates a user
+         * creates a user without password
          * @param Object doc
          * @return Boolean
          *      true = create user successfull
-         *      error = create user failed
          */
         createUserWithoutPassword: function (doc) {
             // Important server-side check for security and data integrity
@@ -69,7 +58,6 @@ if (Meteor.isServer) {
          * @param String userId
          * @return Boolean
          *      true = remove user successfull
-         *      error = remove user failed
          */
         removeUser: function (userId) {
             if (userId !== Meteor.userId()) {
@@ -125,8 +113,8 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("user", "You are not allowed to delete yourself");
             }
         },
-        /*
-         * checks if a given username is already existing in the database
+        /**
+         * checks if a given username already exists
          * @param String username
          * @return Boolean
          *      true = username is existing
@@ -140,7 +128,7 @@ if (Meteor.isServer) {
             return false;
         },
         /**
-         * checks if a given email is already existing in the database
+         * checks if a given email already exists
          * @param String email
          * @return Boolean
          *      true = email is existing
