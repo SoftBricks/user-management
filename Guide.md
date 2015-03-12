@@ -106,5 +106,61 @@ Fields `name`, `path`, `template`, and `layoutTemplate` are passed down directly
         <td>/addUser</td>
         <td>umAddUser</td>
     </tr>
+    <tr>
+        <td>add a group</td>
+        <td>addGroup</td>
+        <td>umAddGroup</td>
+        <td>/addGroup</td>
+        <td>umAddGroup</td>
+    </tr>
+    <tr>
+        <td>show groups</td>
+        <td>showGroups</td>
+        <td>umShowGroups</td>
+        <td>/showGroups</td>
+        <td>umShowGroups</td>
+    </tr>
+    <tr>
+        <td>show a group</td>
+        <td>showGroup</td>
+        <td>umShowGroup</td>
+        <td>/showGroup/:groupId</td>
+        <td>umShowGroup</td>
+    </tr>
+    <tr>
+        <td>edit a group</td>
+        <td>editGroup</td>
+        <td>umEditGroup</td>
+        <td>/editGroup/:groupId</td>
+        <td>umEditGroup</td>
+    </tr>
+    <tr>
+        <td>manage roles</td>
+        <td>manageRoles</td>
+        <td>umManageRoles</td>
+        <td>/manageRoles</td>
+        <td>umManageRoles</td>
+    </tr>
+    <tr>
+        <td>add a roles</td>
+        <td>addRole</td>
+        <td>umAddRole</td>
+        <td>/addRole</td>
+        <td>umAddRole</td>
+    </tr>
+    <tr>
+        <td>add a group role</td>
+        <td>addGroupRole</td>
+        <td>umAddGroupRole</td>
+        <td>/editGroup/:groupId/addGroupRole</td>
+        <td>umAddGroupRole</td>
+    </tr>
+    <tr>
+        <td>add a user to a group role</td>
+        <td>addUserToGroupRole</td>
+        <td>umAddUserToGroupRole</td>
+        <td>/editGroup/:groupId/addUserToGroupRole/:userId</td>
+        <td>umAddUserToGroupRole</td>
+    </tr>
 </table>
 If `layoutTemplate` is not specified, it falls back to what is currently set up with Iron-Router
