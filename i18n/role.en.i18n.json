@@ -5,6 +5,9 @@
 	"editRole": "Edit Role",
 	"roleInfo": "Role Info",
 	"rolename": "Rolename",
+  	"addRole": "Add Role",
+  	"userRoles": "User Roles",
+  	"groupRoles": "Available Group Roles",
 
 	"noRolesYet": "looks like there are no roles yet... click the button below to create some",
 	"maybeNoRoleRights": "(maybe you are missing the rights to see any)"

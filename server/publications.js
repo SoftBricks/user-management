@@ -10,7 +10,6 @@ Meteor.publish("users", function () {
 publishUsers = function (context, selector, options) {
     selector = selector || {};
     options = options || {};
-
     if (context.userId) {
         var user = Meteor.users.findOne({
             _id: context.userId

@@ -7,6 +7,7 @@
 	"removeQuestion": "Remove %s?",
 	"removeUserInfo": "All information about this user will be deleted permanently",
 	"removeGroupInfo": "All information about this group will be deleted permanently",
+  	"add": "Add",
 
 	"editSuccess": "%s was edited successfully",
 	"createSuccess": "%s was created successfully",

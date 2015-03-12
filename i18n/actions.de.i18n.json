@@ -7,6 +7,7 @@
 	"removeQuestion": "%s wirklich entfernen?",
 	"removeUserInfo": "Alle Informationen über diesen Nutzer werden unwiederruflich entfernt!",
 	"removeGroupInfo": "Alle Informationen über diese Gruppe werden unwiederruflich entfernt!",
+  	"add": "Hinzufügen",
 
 	"editSuccess": "%s wurde erfolgreich bearbeitet",
 	"createSuccess": "%s wurde erfolgreich erstellt",

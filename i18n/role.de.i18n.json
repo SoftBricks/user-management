@@ -5,6 +5,9 @@
 	"editRole": "Rolle Bearbeiten",
 	"roleInfo": "Rollen Info",
 	"rolename": "Rollenname",
+  	"addRole": "Rolle hinzufügen",
+  	"userRoles": "Benutzer Rollen",
+  	"groupRoles": "Verfügbare Gruppen Rollen",
 
 	"noRolesYet": "Es gibt noch keine Rollen. Klicken den Button unten um welche zu erstellen."
 }
