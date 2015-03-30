@@ -164,3 +164,46 @@ Fields `name`, `path`, `template`, and `layoutTemplate` are passed down directly
     </tr>
 </table>
 If `layoutTemplate` is not specified, it falls back to what is currently set up with Iron-Router
+
+### Schemas
+User Schema
+```javascript
+// User Schema
+{
+    emails: [],
+    emails.$.address: SimpleSchema.RegEx.Email,
+    emails.$.verified: Boolean,
+    username: String,
+    profile: {
+        fullname: String,
+        activated: Boolean, //should be 'active' ?
+        fields: [],
+        fields.$.key: String,
+        fields.$.value: String,
+    },
+    createdAt: Date
+    services: {} // what is this for?
+    roles: [String]
+}
+```
+Group Schema
+```javascript
+// Group Schema
+{
+    groupname: String,
+    leader: String,
+    parentGroup: String,
+    users: [Object] // should be members!
+    users.$.id: String // easier to use like this, instead of list of strings
+}
+```
+If groups are added, the user schema needs to be extended with this:
+```javascript
+// Extension for user schema
+{
+    profile: {
+        groups: [Object]
+        groups.$.id: String // easier to use like this, instead of list of strings
+    }
+}
+```
