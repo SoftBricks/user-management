@@ -164,3 +164,72 @@ Fields `name`, `path`, `template`, and `layoutTemplate` are passed down directly
     </tr>
 </table>
 If `layoutTemplate` is not specified, it falls back to what is currently set up with Iron-Router
+
+### Schemas
+#### User Schema
+```javascript
+// User Schema
+{
+    emails: [],
+    emails.$.address: SimpleSchema.RegEx.Email,
+    emails.$.verified: Boolean,
+    username: String,
+    profile: {
+        fullname: String,
+        activated: Boolean, //should be 'active' ?
+        fields: {}, // will be filled later with additional fields collection
+    },
+    createdAt: Date
+    services: {} // what is this for?
+    roles: [String]
+}
+```
+#### Additional fields Schema
+```javascript
+// Additional Fields Schema
+{
+    key: String
+    label: String
+}
+```
+Merging Schemas is supported by SimpleSchema/Collection2: 
+> "If the schemas are attached to collections using collection2, then package users can simply attach their extension schema
+> after that, and the two schemas will be merged."  
+
+This means, that once the additional fields collection is updated, we simply attach another (manipulated) schema to the Meteor.users collection. When a field is removed, we need some more logic to clear up the collections.
+This is how it works:
+```javascript
+var fields = AdditionalFields.find();
+var extendingSchema = {
+    fields: {}
+};
+fields.forEach(function(field){
+    extendingSchema.fields[field.key] = {
+        type: String,
+        label: field.label,
+        optional: true
+    }
+});
+Meteor.users.attachSchema(extendingSchema); // wont overwrite but will extend :)
+```
+#### Group Schema
+```javascript
+// Group Schema
+{
+    groupname: String,
+    leader: String,
+    parentGroup: String,
+    users: [Object] // should be members!
+    users.$.id: String // easier to use like this, instead of list of strings
+}
+```
+If groups are added, the user schema needs to be extended with this:
+```javascript
+// Extension for user schema
+{
+    profile: {
+        groups: [Object]
+        groups.$.id: String // easier to use like this, instead of list of strings
+    }
+}
+```
