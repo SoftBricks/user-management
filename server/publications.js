@@ -6,6 +6,9 @@ Meteor.publish("users", function () {
         return res;
     }
 });
+Meteor.publish("additionalUserFields", function () {
+    return AdditionalUserFields.find();
+});
 
 publishUsers = function (context, selector, options) {
     selector = selector || {};
@@ -24,12 +27,10 @@ publishUsers = function (context, selector, options) {
     }
 };
 
-Meteor.publish("schema", function () {
-    return SchemaCol.find();
-});
-
 Meteor.publish("roles", function () {
     if (Roles.userIsInRole(this.userId, 'admin') || Roles.userIsInRole(this.userId, 'superAdmin')) {
         return Meteor.roles.find();
+    }else{
+        this.ready();
     }
 });

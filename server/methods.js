@@ -7,7 +7,7 @@ if (Meteor.isServer) {
      * @return String
      *      password with length 10
      */
-    generatePassword = function () {
+    generatePassword = function() {
         var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
         var string_length = 10;
         var randomstring = '';
@@ -35,7 +35,7 @@ if (Meteor.isServer) {
          * @return Boolean
          *      true = create user successfull
          */
-        createUserWithoutPassword: function (doc) {
+        createUserWithoutPassword: function(doc) {
             // Important server-side check for security and data integrity
             if (Roles.userIsInRole(Meteor.userId(), ['admin', 'superAdmin'])) {
                 var user = {
@@ -59,11 +59,13 @@ if (Meteor.isServer) {
          * @return Boolean
          *      true = remove user successfull
          */
-        removeUser: function (userId) {
+        removeUser: function(userId) {
             if (userId !== Meteor.userId()) {
                 if (Roles.userIsInRole(Meteor.userId(), ['admin', 'superAdmin'])) {
                     if (userId) {
-                        var userToRemove = Meteor.users.findOne({_id: userId}, {
+                        var userToRemove = Meteor.users.findOne({
+                            _id: userId
+                        }, {
                             _id: 0,
                             createdAt: 0,
                             emails: 0,
@@ -96,7 +98,7 @@ if (Meteor.isServer) {
                                 });
 
                                 //Run hooked functions
-                                _.each(UserManagementTemplates.onRemoveUser, function (func) {
+                                _.each(UserManagementTemplates.onRemoveUser, function(func) {
                                     func(userId);
                                 });
                             }
@@ -120,8 +122,10 @@ if (Meteor.isServer) {
          *      true = username is existing
          *      false = username not existing
          */
-        checkUsernameExisting: function (username) {
-            var existingUsers = Meteor.users.find({username: username}).fetch();
+        checkUsernameExisting: function(username) {
+            var existingUsers = Meteor.users.find({
+                username: username
+            }).fetch();
             if (existingUsers.length > 0)
                 return true;
 
@@ -134,24 +138,39 @@ if (Meteor.isServer) {
          *      true = email is existing
          *      false = email not existing
          */
-        checkEmailExisting: function (email) {
-            var emailArray = [
-                {
-                    address: email,
-                    verified: true
-                },
-                {
-                    address: email,
-                    verified: false
-                }
-            ];
+        checkEmailExisting: function(email) {
+            var emailArray = [{
+                address: email,
+                verified: true
+            }, {
+                address: email,
+                verified: false
+            }];
 
-            var existingEmails = Meteor.users.find({emails: {$in: emailArray}}).fetch();
+            var existingEmails = Meteor.users.find({
+                emails: {
+                    $in: emailArray
+                }
+            }).fetch();
 
             if (existingEmails.length > 0)
                 return true;
 
             return false;
+        },
+        /**
+         * remove a role
+         * @param String role
+         * @return Boolean
+         *      true = successfully removed role
+         */
+        'removeRole': function(role) {
+            var users = Meteor.users.find({
+                roles: role
+            }).fetch();
+            Roles.removeUsersFromRoles(users, role);
+            Roles.deleteRole(role);
+            return true;
         }
     });
 }
