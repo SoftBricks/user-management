@@ -10,6 +10,7 @@ Security.permit(['update']).collections([Users]).ifHasRole('superAdmin').ifDoesC
 Security.permit(['update']).collections([Users]).ifHasRole('admin').ifIsNotCurrentUser().ifDoesNotEffectSuperAdmin().apply();
 
 Security.permit(['insert']).collections([Users]).ifHasRole('admin').apply();
+Security.permit(['insert']).collections([Users]).ifHasRole('superAdmin').apply();
 
 Security.permit(['insert', 'remove', 'update']).collections([Users]).never().apply();
 
