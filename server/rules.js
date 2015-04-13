@@ -54,17 +54,19 @@ Security.defineMethod("ifDoesNotEffectSuperAdminExceptHimself", {
 Security.defineMethod("ifDoesChangeSuperAdminRole", {
     fetch: [],
     deny: function (type, arg, userId, doc, fields, modifier) {
-        if(typeof modifier !== 'undefined'){
-
+        if(typeof modifier !== 'undefined') {
             var roles = pickDeep(modifier, 'roles');
-            console.log(roles[0].roles);
-
-            if(_.includes(roles[0].roles, 'superAdmin')){
-                console.log("NOT ALLOWED to change superAdmin Role");
-                return true;
-            }else if(_.includes(roles[0].roles['$each'], 'superAdmin')){
-                console.log("NOT ALLOWED to change superAdmin Role");
-                return true;
+            //console.log(roles[0].roles);
+            if (roles.length > 0)
+            {
+                if (_.includes(roles[0].roles, 'superAdmin')) {
+                    console.log("NOT ALLOWED to change superAdmin Role");
+                    return true;
+                } else if (_.includes(roles[0].roles['$each'], 'superAdmin')) {
+                    console.log("NOT ALLOWED to change superAdmin Role");
+                    return true;
+                }
+                return false;
             }
             return false;
         }
