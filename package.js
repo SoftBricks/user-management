@@ -35,8 +35,8 @@ Package.onUse(function(api) {
 
   api.use('email', ['server']);
 
-  api.use('alethes:pages@1.8.4');
-  api.imply('alethes:pages');
+  //api.use('alethes:pages@1.8.4');
+  //api.imply('alethes:pages');
 
   api.use('stevezhu:lodash@3.6.0');
 
