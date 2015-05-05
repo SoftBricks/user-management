@@ -19,7 +19,7 @@ Package.onUse(function(api) {
 
   api.use(['useraccounts:core']);
 
-  api.use(['aldeed:autoform@4.2.2']);
+  api.use(['aldeed:autoform@5.1.2']);
   api.imply('aldeed:autoform');
   api.use(['aldeed:simple-schema@1.3.0']);
   api.imply('aldeed:simple-schema');
@@ -99,7 +99,7 @@ Package.onUse(function(api) {
   api.export('__', ['client','server']);
   api.export('UserSearch', ['client', 'server']);
   api.export('AdditionalUserFields', ['client']);
-  
+
 });
 
 //Package.onTest(function(api) {
