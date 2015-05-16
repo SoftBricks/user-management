@@ -46,7 +46,7 @@ if (Meteor.isServer) {
                 user = Accounts.createUser(user);
                 if (user) {
                     Roles.addUsersToRoles(user, 'user');
-                    Accounts.sendEnrollmentEmail(user);
+                    // Accounts.sendEnrollmentEmail(user);
                     return true;
                 }
                 if (!user)
@@ -171,6 +171,9 @@ if (Meteor.isServer) {
             Roles.removeUsersFromRoles(users, role);
             Roles.deleteRole(role);
             return true;
+        },
+        enrollAccount: function(userId) {
+          Accounts.sendEnrollmentEmail(userId);
         }
     });
 }
