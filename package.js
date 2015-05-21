@@ -77,6 +77,7 @@ Package.onUse(function(api) {
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
   api.addFiles(['lib/userSearch.js'],'client');
   api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
+  api.addFiles(['lib/templates/helpers.js'], 'client');
   api.addFiles(['lib/templates/addUser.js','lib/router.js','lib/templates/editUser.js', 'lib/templates/userSearch.js'], 'client');
   api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
 
