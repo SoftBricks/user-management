@@ -18,6 +18,7 @@ Package.onUse(function(api) {
   api.use(['accounts-password', 'underscore', 'check', 'tracker'], ['client', 'server']);
 
   api.use(['useraccounts:core']);
+  api.use(['useraccounts:flow-routing']);
 
   api.use(['aldeed:autoform@5.1.2']);
   api.imply('aldeed:autoform');
