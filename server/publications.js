@@ -9,6 +9,19 @@ Meteor.publish("users", function () {
 Meteor.publish("additionalUserFields", function () {
     return AdditionalUserFields.find();
 });
+Meteor.publish(null, function () {
+    if (Roles.userIsInRole(this.userId,['admin', 'superAdmin'])){
+      if (!Roles.userIsInRole(this.userId,['superAdmin'])) {
+          return Meteor.roles.find({name: {$ne: 'superAdmin'}});
+      } else {
+          return Meteor.roles.find();
+      }
+    } else {
+      // user not authorized. do not publish secrets
+      this.stop();
+      return;
+    }
+});
 
 publishUsers = function (context, selector, options) {
     selector = selector || {};
