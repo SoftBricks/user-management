@@ -35,6 +35,12 @@ Security.defineMethod("ifDoesNotEffectSuperAdmin", {
         return Roles.userIsInRole(doc._id, 'superAdmin');
     }
 });
+Security.defineMethod("ifDoesNotChangeSuperAdmin", {
+    fetch: [],
+    deny: function (type, arg, userId, doc) {
+        return Roles.userIsInRole(doc._id, 'superAdmin');
+    }
+});
 
 Security.defineMethod("ifDoesNotEffectSuperAdminExceptHimself", {
     fetch: [],
@@ -73,4 +79,3 @@ Security.defineMethod("ifDoesChangeSuperAdminRole", {
         return true;
     }
 });
-
