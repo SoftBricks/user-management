@@ -8,6 +8,7 @@
 	"removeUserInfo": "Alle Informationen über diesen Nutzer werden unwiederruflich entfernt!",
 	"removeGroupInfo": "Alle Informationen über diese Gruppe werden unwiederruflich entfernt!",
   	"add": "Hinzufügen",
+	"create": "Erstellen",
 
 	"editSuccess": "%s wurde erfolgreich bearbeitet",
 	"createSuccess": "%s wurde erfolgreich erstellt",

@@ -46,7 +46,6 @@ if (Meteor.isServer) {
                 user = Accounts.createUser(user);
                 if (user) {
                     Roles.addUsersToRoles(user, 'user');
-                    // Accounts.sendEnrollmentEmail(user);
                     return true;
                 }
                 if (!user)

@@ -20,11 +20,11 @@ Package.onUse(function(api) {
   api.use(['useraccounts:core']);
   api.use(['useraccounts:flow-routing']);
 
-  api.use(['aldeed:autoform@5.1.2']);
+  api.use(['aldeed:autoform@5.4.0']);
   api.imply('aldeed:autoform');
-  api.use(['aldeed:simple-schema@1.3.0']);
+  api.use(['aldeed:simple-schema@1.3.3']);
   api.imply('aldeed:simple-schema');
-  api.use(['aldeed:collection2@2.3.2']);
+  api.use(['aldeed:collection2@2.3.3']);
   api.imply('aldeed:collection2');
 
   api.use('ongoworks:security@1.0.1');
