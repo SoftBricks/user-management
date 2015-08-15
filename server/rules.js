@@ -29,6 +29,9 @@ Security.defineMethod("ifIsNotCurrentUser", {
     }
 });
 
+/**
+ * checks if the user that is being edited is a superAdmin
+ */
 Security.defineMethod("ifDoesNotEffectSuperAdmin", {
     fetch: [],
     deny: function (type, arg, userId, doc) {
@@ -72,7 +75,6 @@ Security.defineMethod("ifDoesChangeSuperAdminRole", {
                     console.log("NOT ALLOWED to change superAdmin Role");
                     return true;
                 }
-                return false;
             }
             return false;
         }
