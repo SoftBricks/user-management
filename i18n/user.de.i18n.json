@@ -11,6 +11,12 @@
 	"identifier": "Bezeichnung",
 	"value": "Wert",
 	"username": "Benutzername",
+	"emailVerify": "Email Adresse schon verifiziert",
+    "rules": "Rollen",
+  	"UserIs": "Nutzer ist ",
+  	"UserIsAdmin": "Administrator",
+  	"UserIsUser": "Benutzer",
+  	"UserIsShiftLeader": "Schichtleiter",
 
 	"noUsersYet": "Es gibt noch keine Nutzer. Klicken den Button unten um welche zu erstellen."
 }
