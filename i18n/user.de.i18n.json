@@ -13,10 +13,9 @@
 	"username": "Benutzername",
 	"emailVerified": "Email Adresse verifiziert",
     "rules": "Rollen",
-  	"UserIs": "Nutzer ist ",
-  	"UserIsAdmin": "Administrator",
-  	"UserIsUser": "Benutzer",
-  	"UserIsShiftLeader": "Schichtleiter",
+  	"UserIs": "Nutzer ist",
+  	"admin": "Administrator",
+  	"shiftLeader": "Schichtleiter",
 
 	"noUsersYet": "Es gibt noch keine Nutzer. Klicken den Button unten um welche zu erstellen."
 }
