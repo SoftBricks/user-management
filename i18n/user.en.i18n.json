@@ -12,6 +12,9 @@
 	"identifier": "Identifier",
 	"value": "Value",
 	"username": "Username",
+  	"sendEnrollmentEmail": "Send enrollment mail",
+  	"confirmSendEnrollmentEmail": "Would you like to send an enrollment email to %s?",
+  	"successfullySentEnrollmentMail": "Enrollment mail was sent successfully",
 
 	"noUsersYet": "looks like there are no users yet... click the button below to create some",
 	"maybeNoUserRights": "(maybe you are missing the rights to see any)"
