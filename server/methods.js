@@ -172,7 +172,12 @@ if (Meteor.isServer) {
             return true;
         },
         enrollAccount: function(userId) {
-          Accounts.sendEnrollmentEmail(userId);
+          if(Roles.userIsInRole(userId, ['admin', 'superAdmin'])) {
+            Accounts.sendEnrollmentEmail(userId);
+            return true;
+          } else {
+            throw new Meteor.Error("enrollmentEmail", "You are not allowed to send encrollment emails");
+          }
         }
     });
 }
