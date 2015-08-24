@@ -81,3 +81,17 @@ Security.defineMethod("ifDoesChangeSuperAdminRole", {
         return true;
     }
 });
+
+Security.defineMethod("ifDoesNotChangeHisRoles", {
+    fetch: [],
+    deny: function (type, arg, userId, doc, fields, modifier) {
+        if(typeof modifier !== 'undefined') {
+
+            var roles = pickDeep(modifier, 'roles');
+            if (_.contains(roles[0].roles, 'admin')) {
+                return true;
+            }
+        }
+        return false;
+    }
+});
