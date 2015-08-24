@@ -88,7 +88,7 @@ Security.defineMethod("ifDoesNotChangeHisRoles", {
         if(typeof modifier !== 'undefined') {
 
             var roles = pickDeep(modifier, 'roles');
-            if (_.contains(roles[0].roles, 'admin')) {
+            if (roles && roles[0] && _.contains(roles[0].roles, 'admin')) {
                 return true;
             }
         }
