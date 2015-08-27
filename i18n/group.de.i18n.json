@@ -5,10 +5,12 @@
 	"leader": "Leiter",
 	"parentGroup": "Untergruppe von",
   	"members": "Mitglieder",
+	"numberOfMembers": "Anzahl der Mitglieder",
   	"groupIds": "Gruppen Id's",
 
 	"groupDetail": "Gruppen Info",
 	"editGroup": "Gruppe Bearbeiten",
+	"addGroup": "Gruppen hinzufügen",
 
 	"noGroupsYet": "Es gibt noch keine Gruppen. Klicken den Button unten um welche zu erstellen.",
 	"maybeNoGroupRights": "(Vielleicht fehlen dir die Rechte um Gruppen zu sehen)"

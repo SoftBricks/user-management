@@ -5,10 +5,12 @@
 	"leader": "Leader",
 	"parentGroup": "Subgroup of",
   	"members": "Members",
+	"numberOfMembers": "Number of mitglieder",
   	"groupIds": "Group id's",
 
 	"groupDetail": "Group Info",
 	"editGroup": "Edit Group",
+	"addGroup": "Add Group",
 
 	"noGroupsYet": "looks like there are no groups yet... click the button below to create some",
 	"maybeNoGroupRights": "(maybe you are missing the rights to see any)"
