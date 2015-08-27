@@ -27,7 +27,7 @@ Package.onUse(function(api) {
   api.use(['aldeed:collection2@2.3.3']);
   api.imply('aldeed:collection2');
 
-  api.use('ongoworks:security@1.0.1');
+  api.use('ongoworks:security@1.2.0');
   api.imply('ongoworks:security');
 
   api.use('tap:i18n@1.4.0', ['client', 'server']);
