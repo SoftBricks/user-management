@@ -15,7 +15,8 @@ SearchSource.defineSource('usersearch', function(searchText, options) {
       };
     return Meteor.users.find(selector, options).fetch();
   } else {
-    return Meteor.users.find({}, options).fetch();
+    // return Meteor.users.find({}, options).fetch();
+    return [];
   }
 });
 
