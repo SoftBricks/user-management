@@ -20,4 +20,4 @@ if(Meteor.roles){
   Security.permit(['insert', 'remove', 'update']).collections([Meteor.roles]).never().apply();
 }
 
-AdditionalUserFields.permit(['insert', 'remove', 'update']).apply();
+// AdditionalUserFields.permit(['insert', 'remove', 'update']).apply();
