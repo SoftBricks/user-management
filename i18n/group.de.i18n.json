@@ -14,5 +14,6 @@
 	"addUsers": "Nutzer hinzufügen",
 
 	"noGroupsYet": "Es gibt noch keine Gruppen. Klicken den Button unten um welche zu erstellen.",
-	"maybeNoGroupRights": "(Vielleicht fehlen dir die Rechte um Gruppen zu sehen)"
+	"maybeNoGroupRights": "(Vielleicht fehlen dir die Rechte um Gruppen zu sehen)",
+	"noMembersYet": "Keine Mitglieder"
 }

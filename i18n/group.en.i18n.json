@@ -14,5 +14,6 @@
 	"addUsers": "Add Users",
 
 	"noGroupsYet": "looks like there are no groups yet... click the button below to create some",
-	"maybeNoGroupRights": "(maybe you are missing the rights to see any)"
+	"maybeNoGroupRights": "(maybe you are missing the rights to see any)",
+	"noMembersYet": "No members yet"
 }
