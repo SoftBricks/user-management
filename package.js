@@ -46,7 +46,7 @@ Package.onUse(function(api) {
   api.use('simple:reactive-method@1.0.0');
   api.imply('simple:reactive-method');
 
-  api.use('meteorhacks:search-source@1.2.0');
+  api.use('meteorhacks:search-source@1.4.0');
   api.imply('meteorhacks:search-source');
 
   api.use('alanning:roles@1.2.12');
