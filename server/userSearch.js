@@ -1,18 +1,18 @@
-SearchSource.defineSource('usersearch', function(searchText, options) {
+SearchSource.defineSource('usersearch', function(searchText, options, filter) {
   var options = {sort: {isoScore: -1}, limit: 20};
 
   if(searchText) {
-    var selector = {};
-      var regExp = buildRegExp(searchText);
-      selector = {
-          $or: [{
-              username: regExp
-          }, {
-              'emails.0.address': regExp
-          }, {
-              'profile.fullname': regExp
-          }]
-      };
+    var regExp = buildRegExp(searchText);
+    var selector = {
+        $or: [{
+            username: regExp
+        }, {
+            'emails.0.address': regExp
+        }, {
+            'profile.fullname': regExp
+        }]
+    };
+    selector = _.extend(selector, filter);
     return Meteor.users.find(selector, options).fetch();
   } else {
     // return Meteor.users.find({}, options).fetch();
