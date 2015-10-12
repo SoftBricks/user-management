@@ -20,6 +20,7 @@
   	"sendEnrollmentEmail": "Einladungs-Email schicken",
  	"confirmSendEnrollmentEmail": "Wollen sie an %s eine Einladungs-Email schicken?",
   	"successfullySentEnrollmentMail": "Einaldungs-Email wurde erfolgreich versendet",
+	"userInsertedSuccessfully": "Nutzer wurde erfolgreich erstellt",
 
 	"noUsersYet": "Es gibt noch keine Nutzer. Klicken den Button unten um welche zu erstellen."
 }
