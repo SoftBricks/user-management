@@ -11,9 +11,5 @@ if(Meteor.isServer){
     if(typeof Meteor.roles.findOne({name:'superAdmin'}) === 'undefined'){
         Roles.createRole('superAdmin');
     }
-
-    if(typeof Meteor.roles.findOne({name:'user'}) === 'undefined'){
-        Roles.createRole('user');
-    }
 }
 });

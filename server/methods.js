@@ -172,7 +172,7 @@ if (Meteor.isServer) {
             return true;
         },
         enrollAccount: function(userId) {
-          if(Roles.userIsInRole(userId, ['admin', 'superAdmin'])) {
+          if(Roles.userIsInRole(this.userId, ['admin', 'superAdmin'])) {
             Accounts.sendEnrollmentEmail(userId);
             return true;
           } else {

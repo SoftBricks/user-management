@@ -21,7 +21,7 @@ SearchSource.defineSource('usersearch', function(searchText, config, filter) {
         $and: [selector, config.filter]
       }
     }
-    return Meteor.users.find(selector, options).fetch();
+    return publishUsers({userId: Meteor.userId()}, selector, options).fetch();
   } else {
     // return Meteor.users.find({}, options).fetch();
     return [];
