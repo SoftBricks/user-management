@@ -10,7 +10,7 @@ Package.describe({
   documentation: 'README.md'
 });
 
-Package.onUse(function(api) {
+Package.onUse(function (api) {
   api.versionsFrom('1.0.3.1');
 
   api.use(['templating', 'session'], 'client');
@@ -54,15 +54,15 @@ Package.onUse(function(api) {
 
   // You must load your package's package-tap.i18n before you load any
   // template
-  api.add_files("package-tap.i18n", ["client", "server"]);
+  api.add_files('package-tap.i18n', ['client', 'server']);
 
   // common
-  api.addFiles('lib/common/common.js', ['client','server']);
-  api.addFiles('lib/common/Users.js', ['client','server']);
-  api.addFiles('lib/common/AdditionalUserFields.js', ['client','server']);
-  api.addFiles(['lib/common/Roles.js'], ['client','server']);
-  api.addFiles(['lib/common/Groups.js'],['server','client']);
-  api.addFiles(['lib/roles.js'],['client','server']);
+  api.addFiles('lib/common/common.js', ['client', 'server']);
+  api.addFiles('lib/common/Users.js', ['client', 'server']);
+  api.addFiles('lib/common/AdditionalUserFields.js', ['client', 'server']);
+  api.addFiles(['lib/common/Roles.js'], ['client', 'server']);
+  api.addFiles(['lib/common/Groups.js'], ['server', 'client']);
+  api.addFiles(['lib/roles.js'], ['client', 'server']);
 
   // server
   api.addFiles('server/publications.js', 'server');
@@ -75,15 +75,15 @@ Package.onUse(function(api) {
 
   // client
   api.addFiles(['lib/core.js', 'lib/server.js'], 'server');
-  api.addFiles(['lib/userSearch.js'],'client');
+  api.addFiles(['lib/userSearch.js'], 'client');
   api.addFiles(['lib/core.js', 'lib/client.js'], 'client');
   api.addFiles(['lib/templates/helpers.js'], 'client');
-  api.addFiles(['lib/templates/addUser.js','lib/router.js','lib/templates/editUser.js', 'lib/templates/userSearch.js'], 'client');
-  api.addFiles(['lib/templates/showUsers.js','lib/templates/showUser.js'], 'client');
+  api.addFiles(['lib/templates/addUser.js', 'lib/router.js', 'lib/templates/editUser.js', 'lib/templates/userSearch.js'], 'client');
+  api.addFiles(['lib/templates/showUsers.js', 'lib/templates/showUser.js'], 'client');
 
   api.addFiles(['lib/templates/userListItem.js']);
 
-  api.addFiles(['lib/templates/manageRoles.js','lib/templates/addRole.js','lib/templates/addGroupRole.js',
+  api.addFiles(['lib/templates/manageRoles.js', 'lib/templates/addRole.js', 'lib/templates/addGroupRole.js',
     'lib/templates/addUserToGroupRole.js'], 'client');
 
   // i18n files
@@ -95,17 +95,17 @@ Package.onUse(function(api) {
   api.addFiles(['i18n/common.de.i18n.json', 'i18n/common.en.i18n.json'], ['client', 'server']);
 
   api.export('UserManagementTemplates', ['client', 'server']);
-  api.export('UM',['client','server']);
-  api.export('SchemaPlain',['client','server']);
-  api.export('checkRights',['server']);
-  api.export('__', ['client','server']);
+  api.export('UM', ['client', 'server']);
+  api.export('SchemaPlain', ['client', 'server']);
+  api.export('checkRights', ['server']);
+  api.export('__', ['client', 'server']);
   api.export('UserSearch', ['client', 'server']);
   api.export('AdditionalUserFields', ['client']);
 
 });
 
-//Package.onTest(function(api) {
+// Package.onTest(function(api) {
 //  api.use('tinytest');
 //  api.use('softbricks:user-management');
 //  api.addFiles('softbricks:user-management-tests.js');
-//});
+// });
